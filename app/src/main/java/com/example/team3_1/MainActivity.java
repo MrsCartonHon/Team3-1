@@ -34,8 +34,8 @@ public class MainActivity extends Activity  {
         b1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(ed1.getText().toString().equals("admin") &&
-                        ed2.getText().toString().equals("admin")) {
+                if(ed1.getText().toString().equals("Username") &&
+                        ed2.getText().toString().equals("Password")) {
                     Toast.makeText(getApplicationContext(),
                             "Redirecting...",Toast.LENGTH_SHORT).show();
                 }else{
