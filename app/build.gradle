@@ -8,7 +8,7 @@ android {
 
     defaultConfig {
         applicationId "com.example.team3_1"
-        minSdkVersion 16
+        minSdkVersion 21
         targetSdkVersion 30
         versionCode 1
         versionName "1.0"
@@ -16,7 +16,7 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
         android.defaultConfig.manifestPlaceholders = [
-                "appAuthRedirectScheme": "com.truckApp.trucks"
+                "appAuthRedirectScheme": "com.okta.dev-7036123"
         ]
     }
     buildFeatures {

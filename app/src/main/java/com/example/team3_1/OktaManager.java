@@ -26,8 +26,8 @@ public class OktaManager {
 
     OIDCConfig config = new OIDCConfig.Builder()
             .clientId("0oab1skuceDbCZwrI5d6")
-            .redirectUri("com.truckApp.trucks:/login")
-            .endSessionRedirectUri("com.truckApp.trucks:/logout")
+            .redirectUri("com.okta.dev-7036123:/login")
+            .endSessionRedirectUri("com.okta.dev-7036123:/logout")
             .scopes("openid", "profile", "offline_access")
             .discoveryUri("https://$dev-7036123.okta.com")
             .create();
@@ -35,7 +35,8 @@ public class OktaManager {
             .withConfig(config)
             .withContext(appContext)
             .withStorage(new SharedPreferenceStorage(appContext))
-            .withCallbackExecutor(Executors.newSingleThreadExecutor())
+            .withCallbackExecutor(null)
+            .setRequireHardwareBackedKeyStore(false)
             .withTabColor(Color.BLUE)
             .supportedBrowsers("com.android.chrome", "org.mozilla.firefox")
             .create();
