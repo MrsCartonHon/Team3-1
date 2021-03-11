@@ -7,13 +7,11 @@ import android.content.Context;
 import android.os.Bundle;
 
 public class OktaLoginApplication extends Application {
-    public static OktaManager oktaManager;
-    public OktaLoginApplication( ) {
-        oktaManager = new OktaManager(this.getApplicationContext());
-    }
-    public OktaLoginApplication(Context context) {
-        oktaManager = new OktaManager(context);
-    }
 
+    @Override
+    public void onCreate() {
+        super.onCreate();
 
+    }
 }
+

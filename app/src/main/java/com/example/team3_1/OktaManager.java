@@ -20,27 +20,31 @@ import javax.security.auth.callback.Callback;
 
 public class OktaManager {
     private Context appContext;
+    private OIDCConfig config;
+    public WebAuthClient client;
+    private SessionClient sessionClient;
     public OktaManager(Context context){
         appContext = context;
+        config = new OIDCConfig.Builder()
+                .clientId("0oab1skuceDbCZwrI5d6")
+                .redirectUri("com.okta.dev-7036123:/login")
+                .endSessionRedirectUri("com.okta.dev-7036123:/logout")
+                .scopes("openid", "profile", "offline_access")
+                .discoveryUri("https://dev-7036123.okta.com")
+                .create();
+        client = new Okta.WebAuthBuilder()
+                .withConfig(config)
+                .withContext(appContext.getApplicationContext())
+                .withStorage(new SharedPreferenceStorage(appContext))
+                .withCallbackExecutor(null)
+                .setRequireHardwareBackedKeyStore(false)
+                .withTabColor(Color.BLUE)
+                .supportedBrowsers("com.android.chrome", "org.mozilla.firefox")
+                .create();
+        sessionClient = client.getSessionClient();
     }
 
-    OIDCConfig config = new OIDCConfig.Builder()
-            .clientId("0oab1skuceDbCZwrI5d6")
-            .redirectUri("com.okta.dev-7036123:/login")
-            .endSessionRedirectUri("com.okta.dev-7036123:/logout")
-            .scopes("openid", "profile", "offline_access")
-            .discoveryUri("https://$dev-7036123.okta.com")
-            .create();
-    WebAuthClient client = new Okta.WebAuthBuilder()
-            .withConfig(config)
-            .withContext(appContext)
-            .withStorage(new SharedPreferenceStorage(appContext))
-            .withCallbackExecutor(null)
-            .setRequireHardwareBackedKeyStore(false)
-            .withTabColor(Color.BLUE)
-            .supportedBrowsers("com.android.chrome", "org.mozilla.firefox")
-            .create();
-    final SessionClient sessionClient = client.getSessionClient();
+
 
     public boolean isAuthenticated(){
         return sessionClient.isAuthenticated();

@@ -25,32 +25,30 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        setupOktaCallback();
         loginBtn = (Button)findViewById(R.id.signInBtn);
         Activity thisclass = this;
-        loginBtn.setOnClickListener(new View.OnClickListener(){
-            public void onClick(View v){
-                AuthenticationPayload payload = new AuthenticationPayload.Builder()
-                        .build();
-                OktaLoginApplication.oktaManager.signIn(thisclass, payload);
-            }
+        loginBtn.setOnClickListener(v -> {
+            AuthenticationPayload payload = new AuthenticationPayload.Builder()
+                    .build();
+            MainActivity.oktaManager.signIn(thisclass, payload);
         });
-        setupOktaCallback();
-        setupViews();
-    }
-    private void setupOktaCallback(){
-        OktaLoginApplication.oktaManager.registerWebAuthCallback(getAuthCallback(), this);
-    }
-    private void setupViews(){
 
     }
+    private void setupOktaCallback(){
+        MainActivity.oktaManager.registerWebAuthCallback(getAuthCallback(), this);
+    }
+
     private ResultCallback getAuthCallback(){
         ResultCallback object = new ResultCallback<AuthorizationStatus, AuthorizationException>() {
             @Override
             public void onSuccess(@NonNull AuthorizationStatus status){
                 if (status == AuthorizationStatus.AUTHORIZED){
+                    Log.d("LoginActivity", "AUTHORIZED");
                     navigateToHome();
                 } else if (status == AuthorizationStatus.SIGNED_OUT){
                     //clear session
+                    Log.d("LoginActivity", "SIGNED OUT");
                 }
             }
             @Override
@@ -59,20 +57,16 @@ public class LoginActivity extends AppCompatActivity {
             }
             @Override
             public void onError(@NonNull String msg, AuthorizationException error){
-                Log.d("LoginActivity", "Error: $msg");
+                Log.d("LoginActivity", "Error: " + error.errorDescription);
             }
         };
         return  object;
     }
 
     private void navigateToHome(){
-
+        Intent intent = new Intent(this, HomePage.class);
+        startActivity(intent);
+        finish();
     }
-
-    public void onSignIn(View view){
-
-    }
-
-
 
 }

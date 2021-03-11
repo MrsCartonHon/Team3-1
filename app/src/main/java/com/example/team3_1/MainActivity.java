@@ -10,28 +10,27 @@ import android.util.Log;
 import com.okta.oidc.Okta;
 
 public class MainActivity extends AppCompatActivity {
-    private OktaManager oktaManager = new OktaLoginApplication(this.getApplicationContext()).oktaManager;
-    //private OktaManager oktaManager = new OktaLoginApplication().oktaManager;
-    private static Context context;
+    public static OktaManager oktaManager;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        context = this.getApplicationContext();
+        oktaManager = new OktaManager(this);
         setContentView(R.layout.activity_main);
         if(oktaManager.isAuthenticated()){
             navigateToHome();
         } else {
             navigateToLogin();
         }
-
     }
 
     private void navigateToHome(){
-
+        Intent intent = new Intent(this, HomePage.class);
+        startActivity(intent);
+        finish();
     }
 
     private void navigateToLogin(){
-        Log.d("MainActivity", "navigateToLogin");
         Intent intent = new Intent(this, LoginActivity.class);
         startActivity(intent);
         finish();
