@@ -19,21 +19,19 @@ import com.okta.oidc.Tokens;
 import com.okta.oidc.util.AuthorizationException;
 
 public class LoginActivity extends AppCompatActivity {
-    //private OktaManager oktaManager =  OktaLoginApplication.oktaManager;
-    private Button loginBtn;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         setupOktaCallback();
-        loginBtn = (Button)findViewById(R.id.signInBtn);
+
+        Button loginBtn = findViewById(R.id.signInBtn);
         Activity thisclass = this;
         loginBtn.setOnClickListener(v -> {
             AuthenticationPayload payload = new AuthenticationPayload.Builder()
                     .build();
             MainActivity.oktaManager.signIn(thisclass, payload);
         });
-
     }
     private void setupOktaCallback(){
         MainActivity.oktaManager.registerWebAuthCallback(getAuthCallback(), this);

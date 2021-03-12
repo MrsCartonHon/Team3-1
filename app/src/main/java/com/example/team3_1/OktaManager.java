@@ -19,13 +19,11 @@ import java.util.concurrent.Executors;
 import javax.security.auth.callback.Callback;
 
 public class OktaManager {
-    private Context appContext;
-    private OIDCConfig config;
-    public WebAuthClient client;
-    private SessionClient sessionClient;
-    public OktaManager(Context context){
-        appContext = context;
-        config = new OIDCConfig.Builder()
+    private final WebAuthClient client;
+    private final SessionClient sessionClient;
+
+    public OktaManager(Context context) {
+        OIDCConfig config = new OIDCConfig.Builder()
                 .clientId("0oab1skuceDbCZwrI5d6")
                 .redirectUri("com.okta.dev-7036123:/login")
                 .endSessionRedirectUri("com.okta.dev-7036123:/logout")
@@ -34,8 +32,8 @@ public class OktaManager {
                 .create();
         client = new Okta.WebAuthBuilder()
                 .withConfig(config)
-                .withContext(appContext.getApplicationContext())
-                .withStorage(new SharedPreferenceStorage(appContext))
+                .withContext(context.getApplicationContext())
+                .withStorage(new SharedPreferenceStorage(context))
                 .withCallbackExecutor(null)
                 .setRequireHardwareBackedKeyStore(false)
                 .withTabColor(Color.BLUE)
@@ -45,23 +43,27 @@ public class OktaManager {
     }
 
 
-
-    public boolean isAuthenticated(){
+    public boolean isAuthenticated() {
         return sessionClient.isAuthenticated();
     }
-    public void registerWebAuthCallback(ResultCallback callback, Activity activity){
+
+    public void registerWebAuthCallback(ResultCallback callback, Activity activity) {
         client.registerCallback(callback, activity);
     }
-    public void registerUserProfileCallback(RequestCallback callback){
+
+    public void registerUserProfileCallback(RequestCallback callback) {
         sessionClient.getUserProfile(callback);
     }
-    public void signIn(Activity activity, AuthenticationPayload payload){
+
+    public void signIn(Activity activity, AuthenticationPayload payload) {
         client.signIn(activity, payload);
     }
-    public void signOut(Activity activity, RequestCallback callback){
+
+    public void signOut(Activity activity, RequestCallback callback) {
         client.signOut(activity, callback);
     }
-    public void clearUserData(){
+
+    public void clearUserData() {
         sessionClient.clear();
     }
 

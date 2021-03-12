@@ -15,8 +15,11 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        oktaManager = new OktaManager(this);
+        if (oktaManager == null){
+            oktaManager = new OktaManager(this);
+        }
         setContentView(R.layout.activity_main);
+
         if(oktaManager.isAuthenticated()){
             navigateToHome();
         } else {
