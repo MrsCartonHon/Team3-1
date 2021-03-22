@@ -26,7 +26,7 @@ public class MainActivity extends AppCompatActivity {
             navigateToLogin();
         }
     }
-
+//j
     private void navigateToHome(){
         Intent intent = new Intent(this, HomePage.class);
         startActivity(intent);
