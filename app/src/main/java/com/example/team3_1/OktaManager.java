@@ -51,7 +51,7 @@ public class OktaManager {
         client.registerCallback(callback, activity);
     }
 
-    public void registerUserProfileCallback(RequestCallback callback) {
+    public void registerUserProfileCallback(RequestCallback<UserInfo, AuthorizationException> callback) {
         sessionClient.getUserProfile(callback);
     }
 
