@@ -9,7 +9,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Team31">
-        <activity android:name=".DriverHomePage"></activity>
+        <activity android:name=".TrucksPage"></activity>
+        <activity android:name=".DriverHomePage" />
         <activity android:name=".HomePage" />
         <activity android:name=".MainActivity">
             <intent-filter>

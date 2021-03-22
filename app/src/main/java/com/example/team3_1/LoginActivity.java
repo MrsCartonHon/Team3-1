@@ -5,19 +5,15 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 import android.widget.Button;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.okta.oidc.AuthenticationPayload;
 import com.okta.oidc.AuthorizationStatus;
-import com.okta.oidc.Okta;
 import com.okta.oidc.RequestCallback;
 import com.okta.oidc.ResultCallback;
-import com.okta.oidc.Tokens;
 import com.okta.oidc.net.response.UserInfo;
 import com.okta.oidc.util.AuthorizationException;
 
@@ -80,12 +76,13 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void navigateToHome(boolean isManager){
+        Intent intent;
         if(isManager){
-            Intent intent = new Intent(this, TruckPageActivity.class);
-            startActivity(intent);
+            intent = new Intent(this, TrucksPage.class);
         } else {
-            Intent intent = new Intent(this, DriverHomePage.class);
+            intent = new Intent(this, DriverHomePage.class);
         }
+        startActivity(intent);
         finish();
     }
 
