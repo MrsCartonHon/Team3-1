@@ -11,10 +11,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Team31">
-        <activity
-            android:name=".TruckerPageActivity"
-            android:label="@string/title_activity_trucker_page"
-            android:theme="@style/Theme.Team31.NoActionBar"></activity>
+        <activity android:name=".TrucksActivity"></activity>
         <activity android:name=".HomePage" />
         <activity android:name=".MainActivity">
             <intent-filter>
