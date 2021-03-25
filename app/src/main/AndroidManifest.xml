@@ -11,8 +11,6 @@
         android:theme="@style/Theme.Team31">
         <activity android:name=".TrucksActivity"></activity>
         <activity android:name=".DriverHomePage" />
-
-        <activity android:name=".HomePage" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
