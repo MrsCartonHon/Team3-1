@@ -56,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
     private void navigateToHome(boolean isManager){
         Intent intent;
         if(isManager){
-            intent = new Intent(this, TrucksPage.class);
+            intent = new Intent(this, TrucksActivity.class);
         } else {
             intent = new Intent(this, DriverHomePage.class);
         }

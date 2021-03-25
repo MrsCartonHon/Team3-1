@@ -10,7 +10,6 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Team31">
         <activity android:name=".TrucksActivity"></activity>
-        <activity android:name=".TrucksPage"></activity>
         <activity android:name=".DriverHomePage" />
 
         <activity android:name=".HomePage" />
