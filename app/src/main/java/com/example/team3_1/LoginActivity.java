@@ -5,17 +5,16 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 import android.widget.Button;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.okta.oidc.AuthenticationPayload;
 import com.okta.oidc.AuthorizationStatus;
+import com.okta.oidc.RequestCallback;
 import com.okta.oidc.ResultCallback;
-import com.okta.oidc.Tokens;
+import com.okta.oidc.net.response.UserInfo;
 import com.okta.oidc.util.AuthorizationException;
 
 public class LoginActivity extends AppCompatActivity {
@@ -43,7 +42,7 @@ public class LoginActivity extends AppCompatActivity {
             public void onSuccess(@NonNull AuthorizationStatus status){
                 if (status == AuthorizationStatus.AUTHORIZED){
                     Log.d("LoginActivity", "AUTHORIZED");
-                    navigateToHome();
+                    getUserProfile();
                 } else if (status == AuthorizationStatus.SIGNED_OUT){
                     //clear session
                     Log.d("LoginActivity", "SIGNED OUT");
@@ -61,10 +60,32 @@ public class LoginActivity extends AppCompatActivity {
         return  object;
     }
 
-    private void navigateToHome(){
-        Intent intent = new Intent(this, HomePage.class);
+    private void getUserProfile(){
+        MainActivity.oktaManager.registerUserProfileCallback(new RequestCallback<UserInfo, AuthorizationException>() {
+            @Override
+            public void onSuccess(@NonNull UserInfo result) {
+                boolean isManager = (boolean) result.get("isTruckManager");
+                navigateToHome(isManager);
+            }
+
+            @Override
+            public void onError(String error, AuthorizationException exception) {
+                Log.d("LoginActivity", error);
+            }
+        });
+    }
+
+    private void navigateToHome(boolean isManager){
+        Intent intent;
+        if(isManager){
+            intent = new Intent(this, TrucksPage.class);
+        } else {
+            intent = new Intent(this, DriverHomePage.class);
+        }
         startActivity(intent);
         finish();
     }
+
+
 
 }
