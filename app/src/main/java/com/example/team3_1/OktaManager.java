@@ -3,7 +3,9 @@ package com.example.team3_1;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
+import android.util.Log;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.okta.oidc.*;
@@ -19,8 +21,8 @@ import java.util.concurrent.Executors;
 import javax.security.auth.callback.Callback;
 
 public class OktaManager {
-    private final WebAuthClient client;
-    private final SessionClient sessionClient;
+    private WebAuthClient client;
+    private  SessionClient sessionClient;
 
     public OktaManager(Context context) {
         OIDCConfig config = new OIDCConfig.Builder()
@@ -59,12 +61,40 @@ public class OktaManager {
         client.signIn(activity, payload);
     }
 
-    public void signOut(Activity activity, RequestCallback callback) {
+    public void logOut(Activity activity, RequestCallback<Integer,AuthorizationException> callback) {
         client.signOut(activity, callback);
     }
 
     public void clearUserData() {
-        sessionClient.clear();
+
+        String accessToken = null;
+        try {
+            Tokens token = sessionClient.getTokens();
+            accessToken = token.getAccessToken();
+        } catch (AuthorizationException e) {
+            //handle error
+        }
+
+        if (accessToken != null) {
+            //use access token
+            sessionClient.revokeToken(accessToken,new RequestCallback<Boolean, AuthorizationException>() {
+                @Override
+                public void onSuccess(@NonNull Boolean result) {
+                    // Token was revoked
+                    Log.d("OktaManager", " " + result);
+
+                }
+                @Override
+                public void onError(String error, AuthorizationException exception) {
+                    // An error occurred
+                    Log.d("OktaManager", " " + exception);
+                }
+            });
+
+        }
+
     }
+
+
 
 }
