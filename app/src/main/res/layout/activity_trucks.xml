@@ -134,6 +134,14 @@
        app:sdMainFabClosedSrc="@drawable/new_icon"
        app:sdMainFabOpenedSrc="@drawable/edit_icon"
        tools:ignore="MissingClass" />
+    <Button
+        android:id="@+id/signOutBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:text="Sign out"
+        android:layout_gravity="bottom|start" />
 
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
