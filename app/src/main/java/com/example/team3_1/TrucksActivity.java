@@ -9,6 +9,7 @@ import android.widget.Button;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -33,8 +34,11 @@ public class TrucksActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_trucks);
+        setContentView(R.layout.trucks_toolbar);
         Button signOutBtn = findViewById(R.id.signOutBtn);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setTitle("Trucks");
+        toolbar.inflateMenu(R.menu.toolbar_menu);
         Activity thisclass = this;
         signOutBtn.setOnClickListener(v -> {
             //MainActivity.oktaManager.signOut(thisclass);
