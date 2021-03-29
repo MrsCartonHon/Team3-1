@@ -38,7 +38,7 @@ public class OktaManager {
                 .withStorage(new SharedPreferenceStorage(context))
                 .withCallbackExecutor(null)
                 .setRequireHardwareBackedKeyStore(false)
-                .withTabColor(Color.BLUE)
+                .withTabColor(context.getResources().getColor(R.color.primaryColor))
                 .supportedBrowsers("com.android.chrome", "org.mozilla.firefox")
                 .create();
         sessionClient = client.getSessionClient();

@@ -1,16 +1,6 @@
 package com.example.team3_1;
 
-import androidx.appcompat.app.AppCompatActivity;
-
-import android.app.Activity;
-import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
@@ -18,33 +8,30 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.widget.Button;
 
-import com.okta.oidc.AuthenticationPayload;
-import com.okta.oidc.AuthorizationStatus;
 import com.okta.oidc.RequestCallback;
-import com.okta.oidc.ResultCallback;
 import com.okta.oidc.util.AuthorizationException;
 
-import com.leinardi.android.speeddial.SpeedDialActionItem;
-
-import java.util.LinkedList;
-
-public class TrucksActivity extends AppCompatActivity {
-
-//    private final LinkedList<String> mWordList = new LinkedList<>();
+public class SettingsActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.trucks_toolbar);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setTitle("Trucks");
+        setContentView(R.layout.activity_settings);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.include);
+        toolbar.setTitle("Settings");
         setSupportActionBar(toolbar);
 
-//        for(int i = 0; i<20; i++) {
-//            mWordList.addLast("Word" + i);
-//        }
+        Button signOutBtn = findViewById(R.id.signOutBtn);
+        Activity thisclass = this;
+        signOutBtn.setOnClickListener(v -> {
+            MainActivity.oktaManager.logOut(this, signOutCallback(thisclass));
+
+        });
     }
 
     //Inflate the menu
@@ -55,24 +42,40 @@ public class TrucksActivity extends AppCompatActivity {
         return true;
     }
 
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_settings:
-                startNewActivity(SettingsActivity.class);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
     }
 
+
     private void startNewActivity(Class activity){
         Intent intent = new Intent(this, activity);
         startActivity(intent);
-        //finish();
     }
 
 
+    private RequestCallback<Integer, AuthorizationException> signOutCallback(Activity activity) {
+        RequestCallback object = new RequestCallback() {
+            @Override
+            public void onSuccess(@NonNull Object result) {
+                Intent intent = new Intent(activity, LoginActivity.class);
+                startActivity(intent);
+                finish();
+            }
 
+            @Override
+            public void onError(String error, Exception exception) {
+                Log.d("DriverHomePage", "Logout error");
+            }
+
+        };
+        return object;
+    }
 
 }
