@@ -13,4 +13,6 @@
     <string name="mrg_logistics">MRG Logistics</string>
     <string name="sign_in">Sign In</string>
     <string name="sign_out">Sign Out</string>
+    <string name="trucks">Trucks</string>
+    <string name="map">Map</string>
 </resources>
