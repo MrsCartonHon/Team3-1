@@ -6,8 +6,13 @@
         android:icon="@drawable/ic_truck"
         android:title="@string/trucks"/>
     <item
-        android:id="@+id/page_2"
+        android:id="@+id/map"
         android:enabled="true"
         android:icon="@drawable/ic_map"
         android:title="@string/map"/>
+    <item
+        android:id="@+id/Tasks"
+        android:enabled="true"
+        android:icon="@drawable/ic_tasks"
+        android:title="@string/tasks"/>
 </menu>
