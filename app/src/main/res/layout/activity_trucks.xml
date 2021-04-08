@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:backgroundTint="@color/primaryColor"
     android:foregroundTint="#4CAF50"
-    tools:context=".TrucksActivity">
+    tools:context=".MangerHomeActivity">
 
 
     <com.google.android.material.card.MaterialCardView

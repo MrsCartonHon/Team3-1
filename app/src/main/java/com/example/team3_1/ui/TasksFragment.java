@@ -10,9 +10,9 @@ import androidx.fragment.app.Fragment;
 
 import com.example.team3_1.R;
 
-public class TruckFragment extends Fragment {
-    public TruckFragment() {
-        super(R.layout.truck_fragment);
+public class TasksFragment extends Fragment {
+    public TasksFragment() {
+        super(R.layout.tasks_fragment);
     }
 
 
@@ -20,7 +20,7 @@ public class TruckFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         // Inflate the layout for this fragment
-        View view =  inflater.inflate(R.layout.truck_fragment, container, false);
+        View view =  inflater.inflate(R.layout.tasks_fragment, container, false);
         return view;
     }
 }

@@ -10,7 +10,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Team31">
         <activity android:name=".SettingsActivity" />
-        <activity android:name=".TrucksActivity" />
+        <activity android:name=".MangerHomeActivity" />
         <activity android:name=".DriverHomePage" />
         <activity android:name=".MainActivity">
             <intent-filter>

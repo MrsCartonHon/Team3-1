@@ -15,10 +15,11 @@ import androidx.fragment.app.FragmentManager;
 import android.content.Intent;
 
 import com.example.team3_1.ui.MapFragment;
+import com.example.team3_1.ui.TasksFragment;
 import com.example.team3_1.ui.TruckFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-public class TrucksActivity extends AppCompatActivity {
+public class MangerHomeActivity extends AppCompatActivity {
 
 //    private final LinkedList<String> mWordList = new LinkedList<>();
 
@@ -45,9 +46,25 @@ public class TrucksActivity extends AppCompatActivity {
                 Fragment selectedFragment = null;
                      switch (item.getItemId()) {
                          case R.id.trucks:
+                             fragmentManager.beginTransaction()
+                                     .setReorderingAllowed(true)
+                                     .replace(R.id.fragment, TruckFragment.class, null)
+                                     .commit();
+                             toolbar.setTitle("Trucks");
                              return true;
                          case R.id.map:
-
+                             fragmentManager.beginTransaction()
+                                     .setReorderingAllowed(true)
+                                     .replace(R.id.fragment, MapFragment.class, null)
+                                     .commit();
+                             toolbar.setTitle("Map");
+                             return true;
+                         case R.id.tasks:
+                             fragmentManager.beginTransaction()
+                                     .setReorderingAllowed(true)
+                                     .replace(R.id.fragment, TasksFragment.class, null)
+                                     .commit();
+                             toolbar.setTitle("Tasks");
                              return true;
                      }
                      return true;
