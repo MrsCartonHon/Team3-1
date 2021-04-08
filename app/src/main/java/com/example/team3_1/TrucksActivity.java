@@ -31,7 +31,7 @@ import com.leinardi.android.speeddial.SpeedDialActionItem;
 import java.util.LinkedList;
 
 public class TrucksActivity extends AppCompatActivity {
-
+private Button button1;
 //    private final LinkedList<String> mWordList = new LinkedList<>();
 
     @Override
@@ -42,11 +42,21 @@ public class TrucksActivity extends AppCompatActivity {
         toolbar.setTitle("Trucks");
         setSupportActionBar(toolbar);
 
+        button1 = findViewById(R.id.button1);
+        button1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openActivity2();
+            }
+        });
 //        for(int i = 0; i<20; i++) {
 //            mWordList.addLast("Word" + i);
 //        }
     }
-
+    public void openActivity2(){
+        Intent intent = new Intent(this, contactActivity.class);
+                startActivity(intent);
+    }
     //Inflate the menu
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

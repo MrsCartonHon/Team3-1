@@ -11,7 +11,8 @@
         android:roundIcon="@mipmap/ic_logo_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Team31">
-        <activity android:name=".SettingsActivity"></activity>
+        <activity android:name=".contactActivity"></activity>
+        <activity android:name=".SettingsActivity" />
         <activity android:name=".TrucksActivity" />
         <activity android:name=".DriverHomePage" />
         <activity android:name=".MainActivity">
@@ -21,8 +22,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".LoginActivity" />
+        <activity android:name=".LoginActivity" />
     </application>
 
 </manifest>
