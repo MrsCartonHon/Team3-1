@@ -36,7 +36,7 @@ private Button backTrucks;
         });
     }
     public void openTrucksActivity(){
-        Intent intent = new Intent(this, TrucksActivity.class
+        Intent intent = new Intent(this, MangerHomeActivity.class
         );
         startActivity(intent);
     }

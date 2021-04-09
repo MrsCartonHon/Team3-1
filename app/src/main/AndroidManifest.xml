@@ -12,6 +12,7 @@
         <activity android:name=".SettingsActivity" />
         <activity android:name=".MangerHomeActivity" />
         <activity android:name=".DriverHomePage" />
+        <activity android:name=".contactActivity"/>
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

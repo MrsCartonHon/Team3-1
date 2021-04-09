@@ -101,13 +101,14 @@
                     app:icon="@drawable/map_icon" />
 
                 <com.google.android.material.button.MaterialButton
+                    android:id="@+id/button1"
                     style="?attr/borderlessButtonStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="16dp"
                     android:layout_weight="1"
+                    android:onClick="openActivity2"
                     android:text="Contact"
-                    android:id="@+id/button1"
                     app:icon="@drawable/contact_icon" />
 
                 <com.google.android.material.button.MaterialButton
