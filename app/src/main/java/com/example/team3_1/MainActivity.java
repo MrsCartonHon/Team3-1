@@ -3,12 +3,10 @@ package com.example.team3_1;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 
-import com.okta.oidc.Okta;
 import com.okta.oidc.RequestCallback;
 import com.okta.oidc.net.response.UserInfo;
 import com.okta.oidc.util.AuthorizationException;
@@ -56,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
     private void navigateToHome(boolean isManager){
         Intent intent;
         if(isManager){
-            intent = new Intent(this, TrucksActivity.class);
+            intent = new Intent(this, MangerHomeActivity.class);
         } else {
             intent = new Intent(this, DriverHomePage.class);
         }

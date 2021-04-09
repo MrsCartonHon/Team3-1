@@ -78,7 +78,7 @@ public class LoginActivity extends AppCompatActivity {
     private void navigateToHome(boolean isManager){
         Intent intent;
         if(isManager){
-            intent = new Intent(this, TrucksActivity.class);
+            intent = new Intent(this, MangerHomeActivity.class);
         } else {
             intent = new Intent(this, DriverHomePage.class);
         }
