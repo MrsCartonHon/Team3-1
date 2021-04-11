@@ -9,9 +9,9 @@
         android:roundIcon="@mipmap/ic_logo_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Team31">
-        <activity android:name=".TrucksActivity"></activity>
+        <activity android:name=".MainActivity"></activity>
         <activity android:name=".DriverHomePage" />
-        <activity android:name=".MainActivity">
+        <activity android:name=".TrucksActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
