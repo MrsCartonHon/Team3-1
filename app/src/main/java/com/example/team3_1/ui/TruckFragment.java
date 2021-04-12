@@ -4,16 +4,22 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.PopupMenu;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.team3_1.R;
+import com.example.team3_1.SettingsActivity;
 import com.example.team3_1.TruckItem;
 import com.example.team3_1.TruckListAdapter;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
@@ -28,15 +34,66 @@ public class TruckFragment extends Fragment {
     private RecyclerView.LayoutManager mLayoutManager;
     private Menu fabMenu;
     private FloatingActionButton buttonInsert;
+    private View view;
+
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
+    }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-
+        setHasOptionsMenu(true);
         // Inflate the layout for this fragment
-        View view =  inflater.inflate(R.layout.truck_fragment, container, false);
+        view =  inflater.inflate(R.layout.truck_fragment, container, false);
+        createTruckList();
         buildRecyclerView(view);
 
+        buttonInsert = (FloatingActionButton) view.findViewById(R.id.fab);
+
+        buttonInsert.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showPopup(v);
+            }
+        });
+
         return view;
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        menu.clear();
+        inflater.inflate(R.menu.actions, menu);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.menu_new_truck:
+                AddTruck(item);
+                Log.d("TruckFragment", "menu_new_truck clicked");
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    public void showPopup(View view) {
+        PopupMenu popup = new PopupMenu(getActivity(), view);
+        MenuInflater inflater = popup.getMenuInflater();
+        inflater.inflate(R.menu.actions, popup.getMenu());
+        popup.show();
+    }
+
+    public void showMoreOptions(View view) {
+        PopupMenu popup = new PopupMenu(getActivity(), view);
+        MenuInflater inflater = popup.getMenuInflater();
+        inflater.inflate(R.menu.edit_truck, popup.getMenu());
+        popup.show();
     }
 
     public void buildRecyclerView(View v) {
@@ -47,5 +104,32 @@ public class TruckFragment extends Fragment {
 
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.setAdapter(mAdapter);
+    }
+
+    public void insertTruck(int position) {
+        mTruckList.add(position, new TruckItem("Truck " + (position+1), R.drawable.more_options_icon, "Going to Grain Cart", "3:45", R.drawable.current_task_icon, R.drawable.location_icon, "Map", "Contact", "New Task"));
+        mAdapter.notifyItemInserted(position);
+    }
+    public void createTruckList(){
+        mTruckList = new ArrayList<>();
+        mTruckList.add(new TruckItem("Truck 1", R.drawable.more_options_icon, "Going to grain cart", "3:45", R.drawable.current_task_icon, R.drawable.location_icon, "Map", "Contact", "New Task"));
+    }
+
+
+    public void moreOptionsTruck(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.rename_truck:
+                Log.d("RENAME", "RENAME");
+            case R.id.delete_truck:
+                Log.d("DELETE", "DELETE");
+        }
+    }
+    public void AddTruck(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.menu_new_truck:
+                int position = mRecyclerView.getAdapter().getItemCount();
+                insertTruck(position);
+
+        }
     }
 }
