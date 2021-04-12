@@ -70,6 +70,7 @@ public class TruckListAdapter extends RecyclerView.Adapter<TruckListAdapter.Truc
 
     @Override
     public int getItemCount() {
+
         return mTruckList.size();
     }
 }

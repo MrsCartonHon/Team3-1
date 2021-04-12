@@ -12,6 +12,10 @@
     <string name="TruckN1"></string>
     <string name="mrg_logistics">MRG Logistics</string>
     <string name="sign_in">Sign In</string>
+    <string name="sign_out">Sing Out</string>
     <string name="menu_new_truck">Add New Truck</string>
     <string name="map_button">Map</string>
+    <string name="trucks">Trucks</string>
+    <string name="tasks">Tasks</string>
+    <string name="map">Map</string>
 </resources>

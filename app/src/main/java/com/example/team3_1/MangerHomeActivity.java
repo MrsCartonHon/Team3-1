@@ -18,6 +18,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.view.View;
 import android.widget.Button;
+import android.widget.PopupMenu;
+
 
 import com.example.team3_1.ui.MapFragment;
 import com.example.team3_1.ui.TasksFragment;
@@ -53,8 +55,9 @@ public class MangerHomeActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         createTruckList();
-        buildRecyclerView();
+        //buildRecyclerView();
 
+        /*
         buttonInsert = (FloatingActionButton) findViewById(R.id.fab);
 
         buttonInsert.setOnClickListener(new View.OnClickListener() {
@@ -63,6 +66,8 @@ public class MangerHomeActivity extends AppCompatActivity {
                 showPopup(v);
             }
         });
+
+         */
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavigation);
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -107,7 +112,7 @@ public class MangerHomeActivity extends AppCompatActivity {
         mTruckList = new ArrayList<>();
         mTruckList.add(new TruckItem("Truck 1", R.drawable.more_options_icon, "Going to grain cart", "3:45", R.drawable.current_task_icon, R.drawable.location_icon, "Map", "Contact", "New Task"));
     }
-    public void buildRecyclerView() {
+    public void buildRecyclerView( ) {
         mRecyclerView = findViewById(R.id.recyclerView);
         mRecyclerView.setHasFixedSize(true);
         mLayoutManager = new LinearLayoutManager(this);
@@ -140,7 +145,12 @@ public class MangerHomeActivity extends AppCompatActivity {
     public void AddTruck(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.menu_new_truck:
-                int position = mRecyclerView.getAdapter().getItemCount();
+                int position;
+                if (mRecyclerView.getAdapter().getItemCount() > 0){
+                    position = mRecyclerView.getAdapter().getItemCount();
+                } else {
+                    position = 0;
+                }
                 insertTruck(position);
 
         }
