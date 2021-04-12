@@ -9,18 +9,18 @@
         android:roundIcon="@mipmap/ic_logo_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Team31">
-        <activity android:name=".MainActivity"></activity>
+        <activity android:name=".SettingsActivity" />
+        <activity android:name=".MangerHomeActivity" />
         <activity android:name=".DriverHomePage" />
-        <activity android:name=".TrucksActivity">
+        <activity android:name=".contactActivity"/>
+        <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".LoginActivity"
-            android:theme="@style/Theme.MaterialComponents.Light.NoActionBar" />
+        <activity android:name=".LoginActivity" />
     </application>
 
     <uses-permission android:name="android.permission.INTERNET" />
