@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:cardCornerRadius="4dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/recyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingBottom="25dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:textAppearance="?attr/textAppearanceHeadline6"
+            android:textSize="30sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/more_options"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:contentDescription="More Options Button"
+            android:onClick="showMoreOptions"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/more_options_icon" />
+
+        <TextView
+            android:id="@+id/task"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@id/more_options"
+            android:layout_alignEnd="@id/more_options"
+            android:layout_marginEnd="16dp"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@+id/more_options"
+            app:layout_constraintEnd_toStartOf="@+id/more_options" />
+
+        <TextView
+            android:id="@+id/eta"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/task"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="17dp"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toStartOf="@+id/more_options"
+            app:layout_constraintTop_toBottomOf="@+id/task" />
+
+        <ImageView
+            android:id="@+id/current_task_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:layout_toLeftOf="@id/task"
+            android:contentDescription="Current Task Icon"
+            app:layout_constraintBottom_toBottomOf="@+id/task"
+            app:layout_constraintEnd_toStartOf="@+id/task"
+            app:srcCompat="@drawable/current_task_icon" />
+
+        <ImageView
+            android:id="@+id/location_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/current_task_icon"
+            android:layout_alignStart="@id/current_task_icon"
+            android:layout_marginEnd="16dp"
+            android:contentDescription="Location Icon"
+            app:layout_constraintBottom_toBottomOf="@+id/eta"
+            app:layout_constraintEnd_toStartOf="@+id/eta"
+            app:srcCompat="@drawable/location_icon" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/map_button"
+            style="?attr/borderlessButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/eta"
+            android:layout_marginStart="3dp"
+            android:layout_marginTop="16dp"
+            android:saveEnabled="true"
+            android:text="@string/map_button"
+            app:icon="@drawable/map_icon"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/eta" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/contact_button"
+            style="?attr/borderlessButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="16dp"
+            android:text="Contact"
+            app:icon="@drawable/contact_icon"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/map_button"
+            app:layout_constraintTop_toBottomOf="@+id/eta" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/new_task_button"
+            style="?attr/borderlessButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@id/map_button"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="16dp"
+            android:layout_toRightOf="@id/contact_button"
+            android:text="New Task"
+            app:icon="@drawable/new_icon"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/contact_button"
+            app:layout_constraintTop_toBottomOf="@+id/eta" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</androidx.cardview.widget.CardView>

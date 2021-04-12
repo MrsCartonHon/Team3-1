@@ -1,144 +1,141 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:backgroundTint="@color/primaryColor"
-    android:foregroundTint="#4CAF50"
-    tools:context=".MangerHomeActivity">
+    android:tag = "cards main container">
 
-
-    <com.google.android.material.card.MaterialCardView
-        android:id="@+id/card"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="8dp"
-        tools:ignore="MissingConstraints">
+        android:layout_height="match_parent"
+        android:scrollbars="vertical"
+        android:background="@color/browser_actions_bg_grey"
+        android:layout_marginBottom="100dp">
 
+<!--
+            <TextView
+                android:id="@+id/name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+-->
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <!-- Media -->
-
-            <RelativeLayout
-                android:layout_width="match_parent"
+            <!--<ImageView
+                android:id="@+id/imageView3"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:padding="16dp">
+                android:layout_alignParentTop="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/more_options_icon" />
 
-                <!-- Title, secondary and supporting text -->
-                <TextView
-                    android:id="@+id/name"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentStart="true"
-                    android:layout_alignParentTop="true"
-                    android:text="Truck #1"
-                    android:textAppearance="?attr/textAppearanceHeadline6" />
-
-                <ImageView
-                    android:id="@+id/imageView3"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentTop="true"
-                    android:layout_alignParentEnd="true"
-                    app:srcCompat="@drawable/more_options_icon" />
-
-                <TextView
-                    android:id="@+id/task"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignBaseline="@id/imageView3"
-                    android:layout_alignEnd="@id/imageView3"
-                    android:layout_marginEnd="45dp"
-                    android:layout_marginBottom="20dp"
-                    android:text="Going to grain cart" />
-
-                <TextView
-                    android:id="@+id/eta"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/task"
-                    android:layout_alignStart="@id/imageView"
-                    android:layout_marginStart="28dp"
-                    android:text="3:25 PM" />
-
-                <ImageView
-                    android:id="@+id/imageView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="5dp"
-                    android:layout_marginBottom="15dp"
-                    android:layout_toLeftOf="@id/task"
-                    app:srcCompat="@drawable/current_task_icon" />
-
-                <ImageView
-                    android:id="@+id/imageView2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/imageView"
-                    android:layout_alignStart="@id/imageView"
-                    android:layout_marginEnd="5dp"
-                    app:srcCompat="@drawable/location_icon" />
-            </RelativeLayout>
-
-            <!-- Buttons -->
-            <LinearLayout
-                android:layout_width="match_parent"
+            <TextView
+                android:id="@+id/task"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:layout_alignBaseline="@id/imageView3"
+                android:layout_alignEnd="@id/imageView3"
+                android:layout_marginEnd="16dp"
+                android:text="Going to grain cart"
+                app:layout_constraintBottom_toBottomOf="@+id/imageView3"
+                app:layout_constraintEnd_toStartOf="@+id/imageView3" />
 
-                <com.google.android.material.button.MaterialButton
-                    style="?attr/borderlessButtonStyle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="16dp"
-                    android:layout_weight="1"
-                    android:text="Map"
-                    app:icon="@drawable/map_icon" />
+            <TextView
+                android:id="@+id/eta"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/task"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="17dp"
+                android:text="3:25 PM"
+                app:layout_constraintEnd_toStartOf="@+id/imageView3"
+                app:layout_constraintTop_toBottomOf="@+id/task" />
 
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/button1"
-                    style="?attr/borderlessButtonStyle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="16dp"
-                    android:layout_weight="1"
-                    android:onClick="openActivity2"
-                    android:text="Contact"
-                    app:icon="@drawable/contact_icon" />
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:layout_toLeftOf="@id/task"
+                app:layout_constraintBottom_toBottomOf="@+id/task"
+                app:layout_constraintEnd_toStartOf="@+id/task"
+                app:srcCompat="@drawable/current_task_icon" />
 
-                <com.google.android.material.button.MaterialButton
-                    style="?attr/borderlessButtonStyle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="New Task"
-                    app:icon="@drawable/new_icon" />
-            </LinearLayout>
+            <ImageView
+                android:id="@+id/imageView2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/imageView"
+                android:layout_alignStart="@id/imageView"
+                android:layout_marginEnd="16dp"
+                app:layout_constraintBottom_toBottomOf="@+id/eta"
+                app:layout_constraintEnd_toStartOf="@+id/eta"
+                app:srcCompat="@drawable/location_icon" />
 
-        </LinearLayout>
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/map_button"
+                style="?attr/borderlessButtonStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@+id/eta"
+                android:layout_marginStart="3dp"
+                android:layout_marginTop="16dp"
+                android:saveEnabled="true"
+                android:text="Map"
+                app:icon="@drawable/map_icon"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/eta" />
 
-    </com.google.android.material.card.MaterialCardView>
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/contact_button"
+                style="?attr/borderlessButtonStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="32dp"
+                android:layout_marginTop="16dp"
+                android:text="Contact"
+                app:icon="@drawable/contact_icon"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/map_button"
+                app:layout_constraintTop_toBottomOf="@+id/eta" />
 
-    <!--    <com.google.android.material.floatingactionbutton.FloatingActionButton-->
-    <!--        android:id="@+id/fab"-->
-    <!--        android:layout_width="wrap_content"-->
-    <!--        android:layout_height="wrap_content"-->
-    <!--        android:layout_gravity="bottom|end"-->
-    <!--        android:layout_margin="16dp"-->
-    <!--        app:srcCompat="@drawable/new_icon"/>-->
+            <com.google.android.material.button.MaterialButton
+                style="?attr/borderlessButtonStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@id/map_button"
+                android:layout_marginStart="32dp"
+                android:layout_marginTop="16dp"
+                android:layout_toRightOf="@id/contact_button"
+                android:text="New Task"
+                app:icon="@drawable/new_icon"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/contact_button"
+                app:layout_constraintTop_toBottomOf="@+id/eta" />-->
+    </androidx.recyclerview.widget.RecyclerView>
 
-    <com.leinardi.android.speeddial.SpeedDialView
-        android:id="@+id/speedDial"
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
-        app:sdMainFabClosedSrc="@drawable/new_icon"
-        app:sdMainFabOpenedSrc="@drawable/edit_icon" />
+        android:layout_margin="16dp"
+        android:onClick="showPopup"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:srcCompat="@drawable/new_icon" />
 
-
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+    <Button
+        android:id="@+id/signOutBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|start"
+        android:text="Sign out"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+</androidx.constraintlayout.widget.ConstraintLayout>

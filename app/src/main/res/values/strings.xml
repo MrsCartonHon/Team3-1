@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">MRG Logistics</string>
+    <string name="app_name">Team3-1</string>
     <string name="title_activity_trucker_page">MainActivity</string>
     <!-- Strings used for fragments for navigation -->
     <string name="first_fragment_label">First Fragment</string>
@@ -12,8 +12,6 @@
     <string name="TruckN1"></string>
     <string name="mrg_logistics">MRG Logistics</string>
     <string name="sign_in">Sign In</string>
-    <string name="sign_out">Sign Out</string>
-    <string name="trucks">Trucks</string>
-    <string name="map">Map</string>
-    <string name="tasks">Tasks</string>
+    <string name="menu_new_truck">Add New Truck</string>
+    <string name="map_button">Map</string>
 </resources>

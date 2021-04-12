@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/rename_truck"
+        android:title="Rename Truck"
+        android:onClick="moreOptionsTruck"/>
+    <item
+        android:id="@+id/delete_truck"
+        android:title="Delete Truck"
+        android:onClick="moreOptionsTruck"/>
+</menu>
