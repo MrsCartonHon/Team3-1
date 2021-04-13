@@ -18,4 +18,5 @@
     <string name="trucks">Trucks</string>
     <string name="tasks">Tasks</string>
     <string name="map">Map</string>
+    <string name="mapbox_access_token">pk.eyJ1IjoidHlncm9zcyIsImEiOiJja25nZnJxOWowNmU1MnFwa2psZDBndGd5In0.FMEc8YvGUf2qaPt1d89UEQ</string>
 </resources>
