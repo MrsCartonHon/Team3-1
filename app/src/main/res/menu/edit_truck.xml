@@ -2,10 +2,8 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/rename_truck"
-        android:title="Rename Truck"
-        android:onClick="moreOptionsTruck"/>
+        android:title="Rename Truck" />
     <item
         android:id="@+id/delete_truck"
-        android:title="Delete Truck"
-        android:onClick="moreOptionsTruck"/>
+        android:title="Delete Truck" />
 </menu>

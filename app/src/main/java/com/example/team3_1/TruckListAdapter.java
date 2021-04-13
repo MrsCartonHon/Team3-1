@@ -1,10 +1,14 @@
 package com.example.team3_1;
 
+import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.PopupMenu;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -48,9 +52,38 @@ public class TruckListAdapter extends RecyclerView.Adapter<TruckListAdapter.Truc
     @Override
     public TruckViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.truck_item, parent, false);
+        v.findViewById(R.id.more_options).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                PopupMenu popup = new PopupMenu(v.getContext(), v);
+                popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                    @Override
+                    public boolean onMenuItemClick(MenuItem item) {
+                        Log.d("Truck Fragment", "here");
+                        // Handle item selection
+                        switch (item.getItemId()) {
+                            case R.id.rename_truck:
+                                moreOptionsTruck(item);
+                                return true;
+                            case R.id.delete_truck:
+                                moreOptionsTruck(item);
+                                return true;
+                            default:
+                                return true;
+                        }
+                    }
+                });
+                MenuInflater inflater = popup.getMenuInflater();
+                inflater.inflate(R.menu.edit_truck, popup.getMenu());
+                popup.show();
+            }
+        });
+
         TruckViewHolder evh = new TruckViewHolder(v);
         return evh;
     }
+
+
 
     @Override
     public void onBindViewHolder(@NonNull TruckViewHolder holder, int position) {
@@ -66,6 +99,15 @@ public class TruckListAdapter extends RecyclerView.Adapter<TruckListAdapter.Truc
         holder.mContactButton.setText(currentItem.getContactButton());
         holder.mNewTaskButton.setText(currentItem.getNewTaskButton());
 
+    }
+
+    public void moreOptionsTruck(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.rename_truck:
+                Log.d("RENAME", "RENAME");
+            case R.id.delete_truck:
+                Log.d("DELETE", "DELETE");
+        }
     }
 
     @Override
