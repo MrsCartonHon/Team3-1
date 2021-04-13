@@ -9,8 +9,10 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.PopupMenu;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -36,7 +38,8 @@ public class TruckFragment extends Fragment {
     private FloatingActionButton buttonInsert;
     private View view;
 
-    public void onCreate(Bundle savedInstanceState) {
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
     }
@@ -44,7 +47,7 @@ public class TruckFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        setHasOptionsMenu(true);
+
         // Inflate the layout for this fragment
         view =  inflater.inflate(R.layout.truck_fragment, container, false);
         createTruckList();
@@ -59,31 +62,29 @@ public class TruckFragment extends Fragment {
             }
         });
 
+
         return view;
     }
 
-    @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        menu.clear();
-        inflater.inflate(R.menu.actions, menu);
-        super.onCreateOptionsMenu(menu, inflater);
-    }
 
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.menu_new_truck:
-                AddTruck(item);
-                Log.d("TruckFragment", "menu_new_truck clicked");
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-    }
 
     public void showPopup(View view) {
         PopupMenu popup = new PopupMenu(getActivity(), view);
+        popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                Log.d("Truck Fragment", "here");
+                // Handle item selection
+                switch (item.getItemId()) {
+                    case R.id.menu_new_truck:
+                        AddTruck(item);
+                        return true;
+                    default:
+                        return true;
+                }
+            }
+        });
         MenuInflater inflater = popup.getMenuInflater();
         inflater.inflate(R.menu.actions, popup.getMenu());
         popup.show();
