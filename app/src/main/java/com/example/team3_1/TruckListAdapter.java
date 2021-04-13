@@ -52,33 +52,7 @@ public class TruckListAdapter extends RecyclerView.Adapter<TruckListAdapter.Truc
     @Override
     public TruckViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.truck_item, parent, false);
-        v.findViewById(R.id.more_options).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                PopupMenu popup = new PopupMenu(v.getContext(), v);
-                popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-                    @Override
-                    public boolean onMenuItemClick(MenuItem item) {
-                        Log.d("Truck Fragment", "here");
-                        // Handle item selection
-                        switch (item.getItemId()) {
-                            case R.id.rename_truck:
-                                moreOptionsTruck(item);
-                                return true;
-                            case R.id.delete_truck:
-                                moreOptionsTruck(item);
-                                return true;
-                            default:
-                                return true;
-                        }
-                    }
-                });
-                MenuInflater inflater = popup.getMenuInflater();
-                inflater.inflate(R.menu.edit_truck, popup.getMenu());
-                popup.show();
-            }
-        });
-
+        moreOptionsButton(v);
         TruckViewHolder evh = new TruckViewHolder(v);
         return evh;
     }
@@ -101,12 +75,33 @@ public class TruckListAdapter extends RecyclerView.Adapter<TruckListAdapter.Truc
 
     }
 
-    public void moreOptionsTruck(MenuItem item) {
+    public void moreOptionsButton(View v) {
+        v.findViewById(R.id.more_options).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                PopupMenu popup = new PopupMenu(v.getContext(), v);
+                popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                    @Override
+                    public boolean onMenuItemClick(MenuItem item) {
+                        return moreOptionsTruck(item);
+                    }
+                });
+                MenuInflater inflater = popup.getMenuInflater();
+                inflater.inflate(R.menu.edit_truck, popup.getMenu());
+                popup.show();
+            }
+        });
+    }
+    public boolean moreOptionsTruck(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.rename_truck:
-                Log.d("RENAME", "RENAME");
+                Log.d("Rename", "Rename");
+                return true;
             case R.id.delete_truck:
                 Log.d("DELETE", "DELETE");
+                return true;
+            default:
+                return true;
         }
     }
 
