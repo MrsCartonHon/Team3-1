@@ -102,6 +102,7 @@ public class TruckListAdapter extends RecyclerView.Adapter<TruckListAdapter.Truc
     }
 
     public void moreOptionsTruck(MenuItem item) {
+        Log.d("Truck", "Truck" + mTruckList.size());
         switch (item.getItemId()) {
             case R.id.rename_truck:
                 Log.d("RENAME", "RENAME");

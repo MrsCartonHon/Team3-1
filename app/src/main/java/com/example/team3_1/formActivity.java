@@ -35,7 +35,9 @@ public class formActivity extends AppCompatActivity {
                 n = name.getText().toString();
                 c = contact.getText().toString();
                 cl = color.getText().toString();
-                startNewActivity(MangerHomeActivity.class);
+               // startNewActivity(MangerHomeActivity.class);
+               // finish();
+                finish();
             }
         });
     }
