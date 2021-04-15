@@ -13,11 +13,11 @@ public class TruckItem extends formActivity {
     private String mContactButton;
     private String mNewTaskButton;
 
-    public TruckItem(int moreOptions, String task, String eta, int currentTaskIcon, int locationIcon, String mapButton, String contactButton, String newTaskButton)
+    public TruckItem(String name, int moreOptions, String task, String eta, int currentTaskIcon, int locationIcon, String mapButton, String contactButton, String newTaskButton)
     {
-        mName = formActivity.getName(n);
+        mName = name;
         mMoreOptions = moreOptions;
-        mTask = formActivity.getTask(cl);
+        mTask = task;
         mETA = eta;
         mCurrentTaskIcon = currentTaskIcon;
         mLocationIcon = locationIcon;

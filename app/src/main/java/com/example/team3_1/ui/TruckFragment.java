@@ -75,7 +75,6 @@ public class TruckFragment extends Fragment {
         popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
-                Log.d("Truck Fragment", "here");
                 // Handle item selection
                 switch (item.getItemId()) {
                     case R.id.menu_new_truck:
@@ -110,12 +109,12 @@ public class TruckFragment extends Fragment {
     }
 
     public void insertTruck(int position) {
-        mTruckList.add(position, new TruckItem(R.drawable.more_options_icon, "Going to Grain Cart", "3:45", R.drawable.current_task_icon, R.drawable.location_icon, "Map", "Contact", "New Task"));
+        mTruckList.add(position, new TruckItem("Truck " + (position+1),R.drawable.more_options_icon, "Going to Grain Cart", "3:45", R.drawable.current_task_icon, R.drawable.location_icon, "Map", "Contact", "New Task"));
         mAdapter.notifyItemInserted(position);
     }
     public void createTruckList(){
         mTruckList = new ArrayList<>();
-        mTruckList.add(new TruckItem(R.drawable.more_options_icon, "Going to grain cart", "3:45", R.drawable.current_task_icon, R.drawable.location_icon, "Map", "Contact", "New Task"));
+        mTruckList.add(new TruckItem("Truck 1",R.drawable.more_options_icon, "Going to grain cart", "3:45", R.drawable.current_task_icon, R.drawable.location_icon, "Map", "Contact", "New Task"));
     }
 
 
