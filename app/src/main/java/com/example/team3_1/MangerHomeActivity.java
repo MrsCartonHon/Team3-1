@@ -117,9 +117,4 @@ public class MangerHomeActivity extends AppCompatActivity {
         //finish();
     }
 
-
-    public void openActivity2(View view) {
-        Intent intent = new Intent(this, contactActivity.class);
-        startActivity(intent);
-    }
 }

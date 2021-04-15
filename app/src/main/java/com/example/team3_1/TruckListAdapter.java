@@ -1,5 +1,7 @@
 package com.example.team3_1;
 
+import android.os.Bundle;
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuInflater;
@@ -52,33 +54,8 @@ public class TruckListAdapter extends RecyclerView.Adapter<TruckListAdapter.Truc
     @Override
     public TruckViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.truck_item, parent, false);
-        v.findViewById(R.id.more_options).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                PopupMenu popup = new PopupMenu(v.getContext(), v);
-                popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-                    @Override
-                    public boolean onMenuItemClick(MenuItem item) {
-                        Log.d("Truck Fragment", "here");
-                        // Handle item selection
-                        switch (item.getItemId()) {
-                            case R.id.rename_truck:
-                                moreOptionsTruck(item);
-                                return true;
-                            case R.id.delete_truck:
-                                moreOptionsTruck(item);
-                                return true;
-                            default:
-                                return true;
-                        }
-                    }
-                });
-                MenuInflater inflater = popup.getMenuInflater();
-                inflater.inflate(R.menu.edit_truck, popup.getMenu());
-                popup.show();
-            }
-        });
-
+        moreOptionsButton(v);
+        contactButton(v);
         TruckViewHolder evh = new TruckViewHolder(v);
         return evh;
     }
@@ -101,13 +78,44 @@ public class TruckListAdapter extends RecyclerView.Adapter<TruckListAdapter.Truc
 
     }
 
-    public void moreOptionsTruck(MenuItem item) {
+    public void contactButton(View v) {
+        v.findViewById(R.id.contact_button).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startNewActivity(contactActivity.class, v);
+            }
+        });
+    }
+
+    public void moreOptionsButton(View v) {
+        v.findViewById(R.id.more_options).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                PopupMenu popup = new PopupMenu(v.getContext(), v);
+                popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                    @Override
+                    public boolean onMenuItemClick(MenuItem item) {
+                        return moreOptionsTruck(item);
+                    }
+                });
+                MenuInflater inflater = popup.getMenuInflater();
+                inflater.inflate(R.menu.edit_truck, popup.getMenu());
+                popup.show();
+            }
+        });
+    }
+  
+    public boolean moreOptionsTruck(MenuItem item) {
         Log.d("Truck", "Truck" + mTruckList.size());
         switch (item.getItemId()) {
             case R.id.rename_truck:
-                Log.d("RENAME", "RENAME");
+                Log.d("Rename", "Rename");
+                return true;
             case R.id.delete_truck:
                 Log.d("DELETE", "DELETE");
+                return true;
+            default:
+                return true;
         }
     }
 
@@ -115,5 +123,11 @@ public class TruckListAdapter extends RecyclerView.Adapter<TruckListAdapter.Truc
     public int getItemCount() {
 
         return mTruckList.size();
+    }
+    private void startNewActivity(Class activity, View v) {
+
+        Intent intent = new Intent(v.getContext(), activity);
+        v.getContext().startActivity(intent);
+        //finish();
     }
 }
