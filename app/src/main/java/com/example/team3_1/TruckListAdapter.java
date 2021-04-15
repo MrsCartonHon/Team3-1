@@ -1,5 +1,7 @@
 package com.example.team3_1;
 
+import android.os.Bundle;
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuInflater;
@@ -53,6 +55,7 @@ public class TruckListAdapter extends RecyclerView.Adapter<TruckListAdapter.Truc
     public TruckViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.truck_item, parent, false);
         moreOptionsButton(v);
+        contactButton(v);
         TruckViewHolder evh = new TruckViewHolder(v);
         return evh;
     }
@@ -75,6 +78,15 @@ public class TruckListAdapter extends RecyclerView.Adapter<TruckListAdapter.Truc
 
     }
 
+    public void contactButton(View v) {
+        v.findViewById(R.id.contact_button).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startNewActivity(contactActivity.class, v);
+            }
+        });
+    }
+
     public void moreOptionsButton(View v) {
         v.findViewById(R.id.more_options).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -93,6 +105,7 @@ public class TruckListAdapter extends RecyclerView.Adapter<TruckListAdapter.Truc
         });
     }
     public boolean moreOptionsTruck(MenuItem item) {
+        Log.d("Truck", "Truck" + mTruckList.size());
         switch (item.getItemId()) {
             case R.id.rename_truck:
                 Log.d("Rename", "Rename");
@@ -109,5 +122,11 @@ public class TruckListAdapter extends RecyclerView.Adapter<TruckListAdapter.Truc
     public int getItemCount() {
 
         return mTruckList.size();
+    }
+    private void startNewActivity(Class activity, View v) {
+
+        Intent intent = new Intent(v.getContext(), activity);
+        v.getContext().startActivity(intent);
+        //finish();
     }
 }

@@ -30,14 +30,13 @@ private Button backTrucks;
         backTrucks.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                openTrucksActivity();
+                finish();
             }
 
         });
     }
     public void openTrucksActivity(){
-        Intent intent = new Intent(this, MangerHomeActivity.class
-        );
+        Intent intent = new Intent(this, MangerHomeActivity.class);
         startActivity(intent);
     }
 }
