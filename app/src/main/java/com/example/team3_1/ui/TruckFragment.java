@@ -1,32 +1,33 @@
 package com.example.team3_1.ui;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.PopupMenu;
-import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.team3_1.R;
-import com.example.team3_1.SettingsActivity;
 import com.example.team3_1.TruckItem;
 import com.example.team3_1.TruckListAdapter;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.example.team3_1.formActivity;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 
 public class TruckFragment extends Fragment {
+    private Intent intent;
+
     public TruckFragment() {
         super(R.layout.truck_fragment);
     }
@@ -79,6 +80,7 @@ public class TruckFragment extends Fragment {
                 switch (item.getItemId()) {
                     case R.id.menu_new_truck:
                         AddTruck(item);
+
                         return true;
                     default:
                         return true;
@@ -108,12 +110,12 @@ public class TruckFragment extends Fragment {
     }
 
     public void insertTruck(int position) {
-        mTruckList.add(position, new TruckItem("Truck " + (position+1), R.drawable.more_options_icon, "Going to Grain Cart", "3:45", R.drawable.current_task_icon, R.drawable.location_icon, "Map", "Contact", "New Task"));
+        mTruckList.add(position, new TruckItem(R.drawable.more_options_icon, "Going to Grain Cart", "3:45", R.drawable.current_task_icon, R.drawable.location_icon, "Map", "Contact", "New Task"));
         mAdapter.notifyItemInserted(position);
     }
     public void createTruckList(){
         mTruckList = new ArrayList<>();
-        mTruckList.add(new TruckItem("Truck 1", R.drawable.more_options_icon, "Going to grain cart", "3:45", R.drawable.current_task_icon, R.drawable.location_icon, "Map", "Contact", "New Task"));
+        mTruckList.add(new TruckItem(R.drawable.more_options_icon, "Going to grain cart", "3:45", R.drawable.current_task_icon, R.drawable.location_icon, "Map", "Contact", "New Task"));
     }
 
 
@@ -126,11 +128,19 @@ public class TruckFragment extends Fragment {
         }
     }
     public void AddTruck(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.menu_new_truck:
+
                 int position = mRecyclerView.getAdapter().getItemCount();
                 insertTruck(position);
-
+                Log.d("ADD","TRUCK ADDED");
+                startNewActivity(formActivity.class);
         }
+
+    private void startNewActivity(Class activity) {
+        Intent intent = new Intent(getActivity(), activity);
+        startActivity(intent);
+        //finish();
     }
+
+
+
 }

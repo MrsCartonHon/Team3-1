@@ -2,7 +2,7 @@ package com.example.team3_1;
 
 import android.widget.ImageView;
 
-public class TruckItem {
+public class TruckItem extends formActivity {
     private String mName;
     private int mMoreOptions;
     private String mTask;
@@ -13,17 +13,18 @@ public class TruckItem {
     private String mContactButton;
     private String mNewTaskButton;
 
-    public TruckItem(String name, int moreOptions, String task, String eta, int currentTaskIcon, int locationIcon, String mapButton, String contactButton, String newTaskButton)
+    public TruckItem(int moreOptions, String task, String eta, int currentTaskIcon, int locationIcon, String mapButton, String contactButton, String newTaskButton)
     {
-        mName = name;
+        mName = formActivity.getName(n);
         mMoreOptions = moreOptions;
-        mTask = task;
+        mTask = formActivity.getTask(cl);
         mETA = eta;
         mCurrentTaskIcon = currentTaskIcon;
         mLocationIcon = locationIcon;
         mMapButton = mapButton;
         mContactButton = contactButton;
         mNewTaskButton = newTaskButton;
+
     }
 
     public String getName() {return mName;}
