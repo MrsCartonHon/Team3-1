@@ -7,12 +7,14 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 
+import com.mapbox.android.core.permissions.PermissionsManager;
 import com.okta.oidc.RequestCallback;
 import com.okta.oidc.net.response.UserInfo;
 import com.okta.oidc.util.AuthorizationException;
 
 public class MainActivity extends AppCompatActivity {
     public static OktaManager oktaManager;
+    private PermissionsManager permissionsManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,4 +63,6 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
         finish();
     }
+
+
 }
