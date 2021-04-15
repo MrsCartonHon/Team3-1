@@ -104,6 +104,7 @@ public class TruckListAdapter extends RecyclerView.Adapter<TruckListAdapter.Truc
             }
         });
     }
+  
     public boolean moreOptionsTruck(MenuItem item) {
         Log.d("Truck", "Truck" + mTruckList.size());
         switch (item.getItemId()) {

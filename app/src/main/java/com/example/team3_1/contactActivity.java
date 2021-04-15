@@ -39,4 +39,5 @@ private Button backTrucks;
         Intent intent = new Intent(this, MangerHomeActivity.class);
         startActivity(intent);
     }
+
 }
