@@ -19,13 +19,15 @@ public class formActivity extends AppCompatActivity {
     String c;
     String cl;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_form);
         name = (EditText) findViewById(R.id.name);
         contact = (EditText) findViewById(R.id.contact);
-        name = (EditText) findViewById(R.id.color);
+        color = (EditText) findViewById(R.id.color);
+        Save =  findViewById(R.id.Save);
 
         Save.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -33,6 +35,7 @@ public class formActivity extends AppCompatActivity {
                 n = name.getText().toString();
                 c = contact.getText().toString();
                 cl = color.getText().toString();
+                startNewActivity(MangerHomeActivity.class);
             }
         });
     }
@@ -44,5 +47,11 @@ public class formActivity extends AppCompatActivity {
     public static String getTask(String cl)
     {
         return cl;
+    }
+
+    private void startNewActivity(Class activity){
+        Intent intent = new Intent(this, activity);
+        startActivity(intent);
+
     }
 }
