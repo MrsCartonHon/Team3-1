@@ -37,6 +37,9 @@ public class MangerHomeActivity extends AppCompatActivity {
     private RecyclerView.LayoutManager mLayoutManager;
     private Menu fabMenu;
     private FloatingActionButton buttonInsert;
+    private TruckFragment truckFragment;
+    private MapFragment mapFragment;
+    private TasksFragment tasksFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +47,9 @@ public class MangerHomeActivity extends AppCompatActivity {
         setContentView(R.layout.farm_manager_home); //trucks_toolbar
         FragmentManager  fragmentManager = getSupportFragmentManager();
         if (savedInstanceState == null) {
+            truckFragment = new TruckFragment();
+            mapFragment = new MapFragment();
+            tasksFragment = new TasksFragment();
             fragmentManager.beginTransaction()
                     .setReorderingAllowed(true)
                     .add(R.id.fragment, TruckFragment.class, null)
@@ -63,21 +69,21 @@ public class MangerHomeActivity extends AppCompatActivity {
                          case R.id.trucks:
                              fragmentManager.beginTransaction()
                                      .setReorderingAllowed(true)
-                                     .replace(R.id.fragment, TruckFragment.class, null)
+                                     .replace(R.id.fragment, truckFragment, null)
                                      .commit();
                              toolbar.setTitle("Trucks");
                              return true;
                          case R.id.map:
                              fragmentManager.beginTransaction()
                                      .setReorderingAllowed(true)
-                                     .replace(R.id.fragment, MapFragment.class, null)
+                                     .replace(R.id.fragment, mapFragment, null)
                                      .commit();
                              toolbar.setTitle("Map");
                              return true;
                          case R.id.tasks:
                              fragmentManager.beginTransaction()
                                      .setReorderingAllowed(true)
-                                     .replace(R.id.fragment, TasksFragment.class, null)
+                                     .replace(R.id.fragment, tasksFragment, null)
                                      .commit();
                              toolbar.setTitle("Tasks");
                              return true;
