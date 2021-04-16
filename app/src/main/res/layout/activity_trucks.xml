@@ -1,132 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:tag = "cards main container">
+    android:tag="cards main container">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:scrollbars="vertical"
-        android:layout_marginBottom="100dp">
 
-<!--
-            <TextView
-                android:id="@+id/name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
--->
-
-            <!--<ImageView
-                android:id="@+id/imageView3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentEnd="true"
-                android:layout_marginTop="16dp"
-                android:layout_marginEnd="16dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/more_options_icon" />
-
-            <TextView
-                android:id="@+id/task"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignBaseline="@id/imageView3"
-                android:layout_alignEnd="@id/imageView3"
-                android:layout_marginEnd="16dp"
-                android:text="Going to grain cart"
-                app:layout_constraintBottom_toBottomOf="@+id/imageView3"
-                app:layout_constraintEnd_toStartOf="@+id/imageView3" />
-
-            <TextView
-                android:id="@+id/eta"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/task"
-                android:layout_marginTop="16dp"
-                android:layout_marginEnd="17dp"
-                android:text="3:25 PM"
-                app:layout_constraintEnd_toStartOf="@+id/imageView3"
-                app:layout_constraintTop_toBottomOf="@+id/task" />
-
-            <ImageView
-                android:id="@+id/imageView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="16dp"
-                android:layout_toLeftOf="@id/task"
-                app:layout_constraintBottom_toBottomOf="@+id/task"
-                app:layout_constraintEnd_toStartOf="@+id/task"
-                app:srcCompat="@drawable/current_task_icon" />
-
-            <ImageView
-                android:id="@+id/imageView2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/imageView"
-                android:layout_alignStart="@id/imageView"
-                android:layout_marginEnd="16dp"
-                app:layout_constraintBottom_toBottomOf="@+id/eta"
-                app:layout_constraintEnd_toStartOf="@+id/eta"
-                app:srcCompat="@drawable/location_icon" />
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/map_button"
-                style="?attr/borderlessButtonStyle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignTop="@+id/eta"
-                android:layout_marginStart="3dp"
-                android:layout_marginTop="16dp"
-                android:saveEnabled="true"
-                android:text="Map"
-                app:icon="@drawable/map_icon"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/eta" />
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/contact_button"
-                style="?attr/borderlessButtonStyle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="32dp"
-                android:layout_marginTop="16dp"
-                android:text="Contact"
-                app:icon="@drawable/contact_icon"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/map_button"
-                app:layout_constraintTop_toBottomOf="@+id/eta" />
-
-            <com.google.android.material.button.MaterialButton
-                style="?attr/borderlessButtonStyle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignTop="@id/map_button"
-                android:layout_marginStart="32dp"
-                android:layout_marginTop="16dp"
-                android:layout_toRightOf="@id/contact_button"
-                android:text="New Task"
-                app:icon="@drawable/new_icon"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/contact_button"
-                app:layout_constraintTop_toBottomOf="@+id/eta" />-->
-    </androidx.recyclerview.widget.RecyclerView>
+        android:scrollbars="vertical"></androidx.recyclerview.widget.RecyclerView>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
+
         android:layout_margin="16dp"
 
+        app:layout_anchor="@+id/recyclerView"
+
+        app:layout_anchorGravity="end|bottom"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:srcCompat="@drawable/new_icon" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
