@@ -18,6 +18,8 @@
     <string name="trucks">Trucks</string>
     <string name="tasks">Tasks</string>
     <string name="map">Map</string>
+    <string name="new_location">New lat: %1$s New longitude: %2$s</string>
     <string name="user_location_permission_explanation">EXPLANATION_HERE</string>
     <string name="mapbox_access_token">pk.eyJ1IjoidHlncm9zcyIsImEiOiJja25nZnJxOWowNmU1MnFwa2psZDBndGd5In0.FMEc8YvGUf2qaPt1d89UEQ</string>
+    <string name="user_location_permission_not_granted">user permision not granted</string>
 </resources>
