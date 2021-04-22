@@ -1,17 +1,23 @@
 package com.example.team3_1.ui;
 
 import android.annotation.SuppressLint;
+import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.location.Location;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
+import com.example.team3_1.MainActivity;
 import com.example.team3_1.R;
 import com.mapbox.android.core.location.LocationEngine;
 import com.mapbox.android.core.location.LocationEngineCallback;
@@ -21,6 +27,7 @@ import com.mapbox.android.core.location.LocationEngineResult;
 import com.mapbox.android.core.permissions.PermissionsListener;
 import com.mapbox.android.core.permissions.PermissionsManager;
 import com.mapbox.mapboxsdk.Mapbox;
+import com.mapbox.mapboxsdk.geometry.LatLng;
 import com.mapbox.mapboxsdk.location.LocationComponent;
 import com.mapbox.mapboxsdk.location.LocationComponentActivationOptions;
 import com.mapbox.mapboxsdk.location.modes.CameraMode;
@@ -29,6 +36,9 @@ import com.mapbox.mapboxsdk.maps.MapView;
 import com.mapbox.mapboxsdk.maps.MapboxMap;
 import com.mapbox.mapboxsdk.maps.OnMapReadyCallback;
 import com.mapbox.mapboxsdk.maps.Style;
+import com.mapbox.mapboxsdk.plugins.markerview.MarkerView;
+import com.mapbox.mapboxsdk.plugins.markerview.MarkerViewManager;
+import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
 
 import java.lang.ref.WeakReference;
 import java.util.List;
@@ -41,6 +51,7 @@ public class MapFragment extends Fragment implements PermissionsListener, OnMapR
     private PermissionsManager permissionsManager;
     private LocationEngine locationEngine;
     private LocationChangeListeningActivityLocationCallback callback = new LocationChangeListeningActivityLocationCallback(this);
+    private MarkerViewManager markerViewManager;
 
     public MapFragment() {
         super(R.layout.map_fragment);
@@ -66,10 +77,33 @@ public class MapFragment extends Fragment implements PermissionsListener, OnMapR
     public void onMapReady(@NonNull MapboxMap mapboxMap) {
         this.mapboxMap = mapboxMap;
 
-        mapboxMap.setStyle(Style.MAPBOX_STREETS, new Style.OnStyleLoaded() {
+        //make markerviewmanager
+        markerViewManager = new MarkerViewManager(mapView, mapboxMap);
+
+        // Use an XML layout to create a View object
+        View customView = LayoutInflater.from(getActivity()).inflate(
+                R.layout.marker_view_bubble, null);
+        customView.setLayoutParams(new FrameLayout.LayoutParams(WRAP_CONTENT, WRAP_CONTENT));
+
+        // Set the View's TextViews with content
+        TextView titleTextView = customView.findViewById(R.id.marker_window_title);
+        titleTextView.setText(R.string.draw_marker_options_title);
+
+        TextView snippetTextView = customView.findViewById(R.id.marker_window_snippet);
+        snippetTextView.setText(R.string.draw_marker_options_snippet);
+
+
+
+        mapboxMap.setStyle(Style.LIGHT, new Style.OnStyleLoaded() {
             @Override
             public void onStyleLoaded(@NonNull Style style) {
-                // Map is set up and the style has loaded. Now you can add data or make other map adjustments
+
+
+
+                MarkerView markerView = new MarkerView(new LatLng(41.556019, -90.495431), customView);
+
+                markerViewManager.addMarker(markerView);
+
                 enableLocationComponent(style);
             }
         });
@@ -199,6 +233,7 @@ public class MapFragment extends Fragment implements PermissionsListener, OnMapR
         if (locationEngine != null) {
             locationEngine.removeLocationUpdates(callback);
         }
+        markerViewManager.onDestroy();
         mapView.onDestroy();
     }
 
