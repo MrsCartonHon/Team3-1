@@ -8,16 +8,18 @@ import android.widget.Button;
 import android.view.View;
 import android.widget.EditText;
 
+import com.example.team3_1.SQLite.DBManager;
 
 
 public class formActivity extends AppCompatActivity {
     EditText name;
     EditText contact;
-    EditText color;
+    EditText task;
     Button Save;
     String n;
     String c;
-    String cl;
+    String t;
+    private DBManager dbManager;
 
 
     @Override
@@ -26,15 +28,18 @@ public class formActivity extends AppCompatActivity {
         setContentView(R.layout.activity_form);
         name = (EditText) findViewById(R.id.name);
         contact = (EditText) findViewById(R.id.contact);
-        color = (EditText) findViewById(R.id.color);
+        task = (EditText) findViewById(R.id.task);
         Save =  findViewById(R.id.Save);
+        dbManager = new DBManager(this);
+        dbManager.open();
 
         Save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 n = name.getText().toString();
                 c = contact.getText().toString();
-                cl = color.getText().toString();
+                t = task.getText().toString();
+                dbManager.insert(n, t);
                // startNewActivity(MangerHomeActivity.class);
                // finish();
                 finish();
