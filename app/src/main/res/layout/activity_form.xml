@@ -15,23 +15,21 @@
         android:layout_marginBottom="31dp"
         android:ems="10"
         android:hint="Truck name"
-        android:inputType="number"
         android:textSize='40dp'
-        app:layout_constraintBottom_toTopOf="@+id/color"
+        app:layout_constraintBottom_toTopOf="@+id/task"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/color"
+        android:id="@+id/task"
         android:layout_width="250dp"
         android:layout_height="80dp"
         android:layout_marginEnd="60dp"
         android:layout_marginBottom="336dp"
         android:ems="10"
         android:hint="Truck task"
-        android:inputType="number"
         android:textSize='40dp'
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
@@ -89,9 +87,9 @@
         android:id="@+id/imageView2"
         android:layout_width="79dp"
         android:layout_height="59dp"
-        app:layout_constraintBottom_toBottomOf="@+id/color"
+        app:layout_constraintBottom_toBottomOf="@+id/task"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/color"
+        app:layout_constraintTop_toTopOf="@+id/task"
         app:srcCompat="@drawable/ic_tasks"
         app:tint="@color/primaryColor" />
 
