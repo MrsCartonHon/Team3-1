@@ -1,3 +1,4 @@
+/*
 package com.example.team3_1.SQLite;
 
 import android.content.ContentValues;
@@ -76,3 +77,4 @@ public class DBManager {
         return count;
     }
 }
+*/

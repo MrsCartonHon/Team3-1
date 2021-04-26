@@ -13,17 +13,10 @@ public class TruckItem extends formActivity {
     private String mContactButton;
     private String mNewTaskButton;
 
-    public TruckItem(String name, int moreOptions, String task, String eta, int currentTaskIcon, int locationIcon, String mapButton, String contactButton, String newTaskButton)
+    public TruckItem(String name, String task)
     {
         mName = name;
-        mMoreOptions = moreOptions;
         mTask = task;
-        mETA = eta;
-        mCurrentTaskIcon = currentTaskIcon;
-        mLocationIcon = locationIcon;
-        mMapButton = mapButton;
-        mContactButton = contactButton;
-        mNewTaskButton = newTaskButton;
 
     }
 

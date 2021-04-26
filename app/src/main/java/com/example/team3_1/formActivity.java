@@ -8,7 +8,9 @@ import android.widget.Button;
 import android.view.View;
 import android.widget.EditText;
 
-import com.example.team3_1.SQLite.DBManager;
+//import com.example.team3_1.SQLite.DBManager;
+import com.example.team3_1.data.Truck;
+import com.example.team3_1.data.TruckDatabase;
 
 
 public class formActivity extends AppCompatActivity {
@@ -19,7 +21,7 @@ public class formActivity extends AppCompatActivity {
     String n;
     String c;
     String t;
-    private DBManager dbManager;
+    //private DBManager dbManager;
 
 
     @Override
@@ -30,8 +32,8 @@ public class formActivity extends AppCompatActivity {
         contact = (EditText) findViewById(R.id.contact);
         task = (EditText) findViewById(R.id.task);
         Save =  findViewById(R.id.Save);
-        dbManager = new DBManager(this);
-        dbManager.open();
+        //dbManager = new DBManager(this);
+        //dbManager.open();
 
         Save.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -39,12 +41,19 @@ public class formActivity extends AppCompatActivity {
                 n = name.getText().toString();
                 c = contact.getText().toString();
                 t = task.getText().toString();
-                dbManager.insert(n, t);
+                saveNewTruck(n, t);
+                //dbManager.insert(n, t);
                // startNewActivity(MangerHomeActivity.class);
                // finish();
                 finish();
             }
         });
+    }
+
+    private void saveNewTruck(String truckName, String truckTask) {
+        TruckDatabase db = TruckDatabase.getDbInstance(this.getApplicationContext());
+        Truck truck = new Truck(truckName, truckTask);
+        db.truckDao().insertTruck(truck);
     }
 
     public static String getName(String n)

@@ -1,3 +1,4 @@
+/*
 package com.example.team3_1.SQLite;
 
 public class TruckItemSQL {
@@ -35,3 +36,4 @@ public class TruckItemSQL {
     public String getContactButton() {return mContactButton;}
     public String getNewTaskButton() {return mNewTaskButton;}
 }
+*/

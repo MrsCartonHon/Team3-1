@@ -14,15 +14,22 @@ import android.widget.PopupMenu;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.LifecycleOwner;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.team3_1.MainActivity;
 import com.example.team3_1.MangerHomeActivity;
 import com.example.team3_1.R;
-import com.example.team3_1.SQLite.DBManager;
-import com.example.team3_1.SQLite.DatabaseHelper;
+/*import com.example.team3_1.SQLite.DBManager;
+import com.example.team3_1.SQLite.DatabaseHelper;*/
 import com.example.team3_1.TruckItem;
 import com.example.team3_1.TruckListAdapter;
+import com.example.team3_1.data.Truck;
+import com.example.team3_1.data.TruckViewModel;
 import com.example.team3_1.formActivity;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -41,19 +48,22 @@ public class TruckFragment extends Fragment {
     private Menu fabMenu;
     private FloatingActionButton buttonInsert;
     private View view;
+    private TruckViewModel truckViewModel;
 
 
-    private DBManager dbManager;
+    /*private DBManager dbManager;
     final String[] from = new String[] {
             DatabaseHelper._ID, DatabaseHelper.NAME, DatabaseHelper.TASK
-    };
+    };*/
 
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        dbManager = new DBManager(this.getContext());
-        dbManager.open();
+        /*dbManager = new DBManager(this.getContext());
+        dbManager.open();*/
+
+
         setHasOptionsMenu(true);
 
     }
@@ -66,6 +76,16 @@ public class TruckFragment extends Fragment {
         view =  inflater.inflate(R.layout.truck_fragment, container, false);
         createTruckList();
         buildRecyclerView(view);
+        final TruckListAdapter adapter = new TruckListAdapter(mTruckList);
+        truckViewModel = ViewModelProviders.of(getActivity()).get(TruckViewModel.class);
+
+        truckViewModel.getAllTrucks().observe((LifecycleOwner) mTruckList, new Observer<ArrayList<Truck>>() {
+            @Override
+            public void onChanged(@Nullable final ArrayList<Truck> trucks) {
+                adapter.setTruck(trucks);
+            }
+
+        });
 
         buttonInsert = (FloatingActionButton) view.findViewById(R.id.fab);
 
@@ -115,10 +135,12 @@ public class TruckFragment extends Fragment {
         mRecyclerView = v.findViewById(R.id.recyclerView);
         mRecyclerView.setHasFixedSize(true);
         mLayoutManager = new LinearLayoutManager(getActivity());
-        if(dbManager.getRowCount() > 0) {
+        /*if(dbManager.getRowCount() > 0) {
             mTruckList = dbManager.setUpTrucks();
-        }
+        }*/
         mAdapter = new TruckListAdapter(mTruckList);
+
+
 
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.setAdapter(mAdapter);
@@ -132,8 +154,8 @@ public class TruckFragment extends Fragment {
         //updateItem(position);
         //TruckItem currentItem = mTruckList.get(position);
 
-        mTruckList.add(position, new TruckItem("Truck " + (position + 1),R.drawable.more_options_icon, "Going to Grain Cart", "3:45", R.drawable.current_task_icon, R.drawable.location_icon, "Map", "Contact", "New Task"));
-        mAdapter.notifyItemInserted(position);
+        mTruckList.add(position, new TruckItem("Truck " + (position + 1), "Going to Grain Cart"));
+        mAdapter.notifyDataSetChanged();
     }
     public void createTruckList(){
         mTruckList = new ArrayList<>();

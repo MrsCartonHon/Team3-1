@@ -16,10 +16,14 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.team3_1.data.Truck;
+
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class TruckListAdapter extends RecyclerView.Adapter<TruckListAdapter.TruckViewHolder> {
     private ArrayList<TruckItem> mTruckList;
+    private ArrayList<Truck> truckList;
 
     public static class TruckViewHolder extends RecyclerView.ViewHolder {
         public TextView mName;
@@ -117,6 +121,13 @@ public class TruckListAdapter extends RecyclerView.Adapter<TruckListAdapter.Truc
             default:
                 return true;
         }
+    }
+
+
+
+    public void setTruck(ArrayList<Truck> trucks) {
+        truckList = trucks;
+        notifyDataSetChanged();
     }
 
     @Override

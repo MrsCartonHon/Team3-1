@@ -1,3 +1,4 @@
+/*
 package com.example.team3_1.SQLite;
 
 import android.content.Context;
@@ -39,3 +40,4 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
 
 }
+*/
