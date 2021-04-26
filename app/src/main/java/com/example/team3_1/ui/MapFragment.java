@@ -1,6 +1,7 @@
 package com.example.team3_1.ui;
 
 import android.annotation.SuppressLint;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.location.Location;
@@ -30,12 +31,16 @@ import com.mapbox.mapboxsdk.Mapbox;
 import com.mapbox.mapboxsdk.geometry.LatLng;
 import com.mapbox.mapboxsdk.location.LocationComponent;
 import com.mapbox.mapboxsdk.location.LocationComponentActivationOptions;
+import com.mapbox.mapboxsdk.location.LocationComponentOptions;
 import com.mapbox.mapboxsdk.location.modes.CameraMode;
 import com.mapbox.mapboxsdk.location.modes.RenderMode;
 import com.mapbox.mapboxsdk.maps.MapView;
 import com.mapbox.mapboxsdk.maps.MapboxMap;
 import com.mapbox.mapboxsdk.maps.OnMapReadyCallback;
 import com.mapbox.mapboxsdk.maps.Style;
+import com.mapbox.mapboxsdk.plugins.annotation.Symbol;
+import com.mapbox.mapboxsdk.plugins.annotation.SymbolManager;
+import com.mapbox.mapboxsdk.plugins.annotation.SymbolOptions;
 import com.mapbox.mapboxsdk.plugins.markerview.MarkerView;
 import com.mapbox.mapboxsdk.plugins.markerview.MarkerViewManager;
 import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
@@ -48,10 +53,15 @@ public class MapFragment extends Fragment implements PermissionsListener, OnMapR
     private static final long DEFAULT_MAX_WAIT_TIME = DEFAULT_INTERVAL_IN_MILLISECONDS * 5;
     private MapView mapView;
     private MapboxMap mapboxMap;
+    private View view;
     private PermissionsManager permissionsManager;
     private LocationEngine locationEngine;
     private LocationChangeListeningActivityLocationCallback callback = new LocationChangeListeningActivityLocationCallback(this);
     private MarkerViewManager markerViewManager;
+    private MarkerView markerView;
+    private SymbolManager symbolManager;
+    private Symbol symbol;
+    Boolean isPopupDisplaying = false;
 
     public MapFragment() {
         super(R.layout.map_fragment);
@@ -63,7 +73,7 @@ public class MapFragment extends Fragment implements PermissionsListener, OnMapR
         Mapbox.getInstance(getContext().getApplicationContext(),getString(R.string.mapbox_access_token));
 
         // Inflate the layout for this fragment
-        View view =  inflater.inflate(R.layout.map_fragment, container, false);
+        view =  inflater.inflate(R.layout.map_fragment, container, false);
 
         mapView = (MapView) view.findViewById(R.id.mapView);
         mapView.onCreate(savedInstanceState);
@@ -92,17 +102,45 @@ public class MapFragment extends Fragment implements PermissionsListener, OnMapR
         TextView snippetTextView = customView.findViewById(R.id.marker_window_snippet);
         snippetTextView.setText(R.string.draw_marker_options_snippet);
 
-
-
         mapboxMap.setStyle(Style.LIGHT, new Style.OnStyleLoaded() {
             @Override
             public void onStyleLoaded(@NonNull Style style) {
+                //define marker images
+                style.addImage(
+                        "marker-ic-id",
+                        BitmapFactory.decodeResource(view.getResources(), R.drawable.mapbox_marker_icon_default), false
+                );
 
 
+                // Create a SymbolManager.
+                symbolManager = new SymbolManager(mapView, mapboxMap, style);
 
-                MarkerView markerView = new MarkerView(new LatLng(41.556019, -90.495431), customView);
+                symbolManager.addClickListener(symbol -> {
+                    if(!isPopupDisplaying){ //show or remove pop up depending on if it already is showing
+                        markerViewManager.addMarker(markerView);//show pop up when clicked
+                    } else {
+                        markerViewManager.removeMarker(markerView); //remove marker
+                    }
+                    isPopupDisplaying = !isPopupDisplaying;
 
-                markerViewManager.addMarker(markerView);
+
+                    return false;
+                });
+                // Set non-data-driven properties.
+                symbolManager.setIconAllowOverlap(true);
+                symbolManager.setTextAllowOverlap(true);
+
+                // Create a symbol at the specified location.
+                SymbolOptions symbolOptions = new SymbolOptions()
+                        .withLatLng(new LatLng(41.556019, -90.495431)) //these are the coordinates of the truck
+                        .withIconImage("marker-ic-id")
+                        .withIconSize(1.3f);
+                //defines marker view(the pop up bubble) but doesnt display it yet
+
+                markerView = new MarkerView(new LatLng(41.556019, -90.495431), customView);
+
+                // Use the manager to draw the symbol.
+                symbol = symbolManager.create(symbolOptions);
 
                 enableLocationComponent(style);
             }
@@ -156,7 +194,6 @@ public class MapFragment extends Fragment implements PermissionsListener, OnMapR
         LocationEngineRequest request = new LocationEngineRequest.Builder(DEFAULT_INTERVAL_IN_MILLISECONDS)
                 .setPriority(LocationEngineRequest.PRIORITY_HIGH_ACCURACY)
                 .setMaxWaitTime(DEFAULT_MAX_WAIT_TIME).build();
-
         locationEngine.requestLocationUpdates(request, callback, getActivity().getMainLooper());
         locationEngine.getLastLocation(callback);
     }
@@ -177,6 +214,7 @@ public class MapFragment extends Fragment implements PermissionsListener, OnMapR
             mapboxMap.getStyle(new Style.OnStyleLoaded() {
                 @Override
                 public void onStyleLoaded(@NonNull Style style) {
+                    Log.d("Map", "here");
                     enableLocationComponent(style);
                 }
             });
