@@ -41,7 +41,6 @@ public class formActivity extends AppCompatActivity {
                 t = task.getText().toString();
                 dbManager.insert(n, t);
                // startNewActivity(MangerHomeActivity.class);
-               // finish();
                 finish();
             }
         });
