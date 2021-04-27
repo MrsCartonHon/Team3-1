@@ -55,7 +55,7 @@ public class TruckListAdapter extends RecyclerView.Adapter<TruckListAdapter.Truc
     public TruckViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.truck_item, parent, false);
         moreOptionsButton(v);
-        contactButton(v);
+        contactButton(v, parent);
         TruckViewHolder evh = new TruckViewHolder(v);
         return evh;
     }
@@ -78,11 +78,11 @@ public class TruckListAdapter extends RecyclerView.Adapter<TruckListAdapter.Truc
 
     }
 
-    public void contactButton(View v) {
-        v.findViewById(R.id.contact_button).setOnClickListener(new View.OnClickListener() {
+    public void contactButton(View view, ViewGroup parent) {
+        view.findViewById(R.id.contact_button).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startNewActivity(contactActivity.class, v);
+                startNewActivity(contactActivity.class, view);
             }
         });
     }
@@ -125,9 +125,9 @@ public class TruckListAdapter extends RecyclerView.Adapter<TruckListAdapter.Truc
         return mTruckList.size();
     }
     private void startNewActivity(Class activity, View v) {
-
+        TextView nameView = (TextView)v.findViewById(R.id.name);
         Intent intent = new Intent(v.getContext(), activity);
+        intent.putExtra("driver_name", nameView.getText().toString());
         v.getContext().startActivity(intent);
-        //finish();
     }
 }
