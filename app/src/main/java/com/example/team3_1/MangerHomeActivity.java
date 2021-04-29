@@ -1,45 +1,27 @@
 package com.example.team3_1;
 
-import androidx.appcompat.app.AppCompatActivity;
-
+import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
-import android.content.Intent;
-import android.view.View;
-import android.widget.Button;
-import android.widget.PopupMenu;
-
 
 import com.example.team3_1.ui.MapFragment;
 import com.example.team3_1.ui.TasksFragment;
 import com.example.team3_1.ui.TruckFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-
-import java.util.ArrayList;
 
 public class MangerHomeActivity extends AppCompatActivity {
-//    private final LinkedList<String> mWordList = new LinkedList<>();
-    private ArrayList<TruckItem> mTruckList;
-    private RecyclerView mRecyclerView;
-    private RecyclerView.Adapter mAdapter;
-    private RecyclerView.LayoutManager mLayoutManager;
-    private Menu fabMenu;
-    private FloatingActionButton buttonInsert;
     private TruckFragment truckFragment;
     private MapFragment mapFragment;
     private TasksFragment tasksFragment;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +41,10 @@ public class MangerHomeActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle("Trucks");
         setSupportActionBar(toolbar);
+
+
+
+
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavigation);
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -91,6 +77,9 @@ public class MangerHomeActivity extends AppCompatActivity {
                      return true;
                  }
              });
+
+
+
 
     }
 

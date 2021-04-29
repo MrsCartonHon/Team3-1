@@ -1,8 +1,6 @@
 package com.example.team3_1;
 
-import android.os.Bundle;
 import android.content.Intent;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -16,10 +14,18 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.util.ArrayList;
+import com.example.team3_1.TruckDb.Truck;
+
+import java.util.List;
 
 public class TruckListAdapter extends RecyclerView.Adapter<TruckListAdapter.TruckViewHolder> {
-    private ArrayList<TruckItem> mTruckList;
+    private List<Truck> mTrucks;
+
+    public interface OnTruckDelete{
+        void deleteTruck(Truck truck);
+    }
+
+    private OnTruckDelete mCallback;
 
     public static class TruckViewHolder extends RecyclerView.ViewHolder {
         public TextView mName;
@@ -46,16 +52,15 @@ public class TruckListAdapter extends RecyclerView.Adapter<TruckListAdapter.Truc
         }
     }
 
-    public TruckListAdapter(ArrayList<TruckItem> truckList) {
-        mTruckList = truckList;
+    public TruckListAdapter(List<Truck> truckList, OnTruckDelete callback) {
+        mTrucks = truckList;
+        mCallback = callback;
     }
 
     @NonNull
     @Override
     public TruckViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.truck_item, parent, false);
-        moreOptionsButton(v);
-        contactButton(v, parent);
         TruckViewHolder evh = new TruckViewHolder(v);
         return evh;
     }
@@ -64,38 +69,21 @@ public class TruckListAdapter extends RecyclerView.Adapter<TruckListAdapter.Truc
 
     @Override
     public void onBindViewHolder(@NonNull TruckViewHolder holder, int position) {
-        TruckItem currentItem = mTruckList.get(position);
+        Truck currentItem = mTrucks.get(position);
+        String nameText = currentItem.getName();
+        String taskText = currentItem.getTask();
+        String phoneNumber = currentItem.getPhoneNumber();
 
-        holder.mName.setText(currentItem.getName());
-        holder.mMoreOptions.setImageResource(currentItem.getMoreOptions());
-        holder.mTask.setText(currentItem.getTask());
-        holder.mETA.setText(currentItem.getETA());
-        holder.mCurrentTaskIcon.setImageResource(currentItem.getCurrentTaskIcon());
-        holder.mLocationIcon.setImageResource(currentItem.getLocationIcon());
-        holder.mMapButton.setText(currentItem.getMapButton());
-        holder.mContactButton.setText(currentItem.getContactButton());
-        holder.mNewTaskButton.setText(currentItem.getNewTaskButton());
-
-    }
-
-    public void contactButton(View view, ViewGroup parent) {
-        view.findViewById(R.id.contact_button).setOnClickListener(new View.OnClickListener() {
+        holder.mName.setText(nameText);
+        holder.mTask.setText(taskText);
+        holder.mMoreOptions.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                startNewActivity(contactActivity.class, view);
-            }
-        });
-    }
-
-    public void moreOptionsButton(View v) {
-        v.findViewById(R.id.more_options).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                PopupMenu popup = new PopupMenu(v.getContext(), v);
+            public void onClick(View view) {
+                PopupMenu popup = new PopupMenu(view.getContext(), view);
                 popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                     @Override
                     public boolean onMenuItemClick(MenuItem item) {
-                        return moreOptionsTruck(item);
+                        return moreOptionsTruck(item, currentItem);
                     }
                 });
                 MenuInflater inflater = popup.getMenuInflater();
@@ -103,16 +91,31 @@ public class TruckListAdapter extends RecyclerView.Adapter<TruckListAdapter.Truc
                 popup.show();
             }
         });
+        holder.mContactButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                TextView nameView = (TextView)view.findViewById(R.id.name);
+                Intent intent = new Intent(view.getContext(), contactActivity.class);
+                intent.putExtra("driver_name", nameText);
+                intent.putExtra("phone_number", phoneNumber);
+                view.getContext().startActivity(intent);
+            }
+        });
+        //holder.mMoreOptions.setImageResource(currentItem.getMoreOptions());
+        //holder.mETA.setText(currentItem.getETA());
+        //holder.mCurrentTaskIcon.setImageResource(currentItem.getCurrentTaskIcon());
+        //holder.mLocationIcon.setImageResource(currentItem.getLocationIcon());
+        //holder.mMapButton.setText(currentItem.getMapButton());
+        //holder.mContactButton.setText(currentItem.getContactButton());
+        //holder.mNewTaskButton.setText(currentItem.getNewTaskButton());
+
+
     }
   
-    public boolean moreOptionsTruck(MenuItem item) {
-        Log.d("Truck", "Truck" + mTruckList.size());
+    public boolean moreOptionsTruck(MenuItem item, Truck truck) {
         switch (item.getItemId()) {
-            case R.id.rename_truck:
-                Log.d("Rename", "Rename");
-                return true;
             case R.id.delete_truck:
-                Log.d("DELETE", "DELETE");
+                mCallback.deleteTruck(truck);
                 return true;
             default:
                 return true;
@@ -121,13 +124,11 @@ public class TruckListAdapter extends RecyclerView.Adapter<TruckListAdapter.Truc
 
     @Override
     public int getItemCount() {
-
-        return mTruckList.size();
+        return mTrucks.size();
     }
-    private void startNewActivity(Class activity, View v) {
-        TextView nameView = (TextView)v.findViewById(R.id.name);
-        Intent intent = new Intent(v.getContext(), activity);
-        intent.putExtra("driver_name", nameView.getText().toString());
-        v.getContext().startActivity(intent);
+
+    public void setTrucks(List<Truck> trucks){
+        mTrucks = trucks;
+        notifyDataSetChanged();
     }
 }

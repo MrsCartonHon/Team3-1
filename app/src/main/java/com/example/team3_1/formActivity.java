@@ -1,63 +1,43 @@
 package com.example.team3_1;
 
-import androidx.appcompat.app.AppCompatActivity;
-
-import android.os.Bundle;
 import android.content.Intent;
-import android.widget.Button;
+import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 
-import com.example.team3_1.SQLite.DBManager;
+import androidx.appcompat.app.AppCompatActivity;
 
 
 public class formActivity extends AppCompatActivity {
-    EditText name;
-    EditText contact;
-    EditText task;
-    Button Save;
-    String n;
-    String c;
-    String t;
-    private DBManager dbManager;
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_form);
-        name = (EditText) findViewById(R.id.name);
-        contact = (EditText) findViewById(R.id.contact);
-        task = (EditText) findViewById(R.id.task);
-        Save =  findViewById(R.id.Save);
-        dbManager = new DBManager(this);
-        dbManager.open();
+        EditText name = (EditText) findViewById(R.id.name);
+        EditText contact = (EditText) findViewById(R.id.contact);
+        EditText task = (EditText) findViewById(R.id.task);
+        Button Save =  findViewById(R.id.Save);
 
         Save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                n = name.getText().toString();
-                c = contact.getText().toString();
-                t = task.getText().toString();
-                dbManager.insert(n, t);
-               // startNewActivity(MangerHomeActivity.class);
+                Intent replyIntent = new Intent();
+                //check if Text is entered into all data fields. and send error if not filled in.
+                if(TextUtils.isEmpty(name.getText()) || TextUtils.isEmpty(task.getText()) || TextUtils.isEmpty(contact.getText())){
+                    setResult(RESULT_CANCELED, replyIntent);
+                } else {
+                    String truckName = name.getText().toString();
+                    String taskName = task.getText().toString();
+                    String contactNumber = contact.getText().toString();
+                    replyIntent.putExtra("truck_name", truckName);
+                    replyIntent.putExtra("truck_task", taskName);
+                    replyIntent.putExtra("truck_contact", contactNumber);
+                    setResult(RESULT_OK, replyIntent);
+                }
                 finish();
             }
         });
-    }
-
-    public static String getName(String n)
-    {
-        return n;
-    }
-    public static String getTask(String cl)
-    {
-        return cl;
-    }
-
-    private void startNewActivity(Class activity){
-        Intent intent = new Intent(this, activity);
-        startActivity(intent);
-
     }
 }
