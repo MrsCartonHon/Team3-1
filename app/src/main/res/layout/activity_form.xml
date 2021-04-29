@@ -60,7 +60,7 @@
         app:strokeColor="#FFFFFF" />
 
     <TextView
-        android:id="@+id/truckInfo"
+        android:id="@+id/taskInfo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="100dp"
