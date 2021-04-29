@@ -4,6 +4,7 @@ import android.os.Bundle;
 
 import android.os.Bundle;
 
+import java.awt.font.NumericShaper;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -85,12 +86,13 @@ public class TasksFragment extends Fragment {
     }
     public void createTaskList() {
         mExampleList = new ArrayList<>();
-        mExampleList.add(new TaskItem( "Line 1", "Line 2"));
-        mExampleList.add(new TaskItem( "Line 3", "Line 4"));
-        mExampleList.add(new TaskItem( "Line 5", "Line 6"));
+        mExampleList.add(new TaskItem( "Task ", "Go harvest grain"));
+        mExampleList.add(new TaskItem("Task ", "Refuel the combine"));
+        mExampleList.add(new TaskItem( "Task ", "Fertilize field 3"));
     }
     public void insertItem(int position) {
-        mExampleList.add(position, new TaskItem( "New Item At Position" + position, "This is Line 2"));
+        String string = editTextInsert.getText().toString();
+        mExampleList.add(position, new TaskItem( "Task" , string));
         mAdapter.notifyItemInserted(position);
     }
     public void removeItem(int position) {
