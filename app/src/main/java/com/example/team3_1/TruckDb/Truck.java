@@ -19,11 +19,19 @@ public class Truck {
     @ColumnInfo(name = "phone_number")
     private String phoneNumber;
 
+    @ColumnInfo(name = "Latitude")
+    private String latitude;
 
-    public Truck(String name, String task, String phoneNumber) {
+    @ColumnInfo(name = "Longitude")
+    private String longitude;
+
+
+    public Truck(String name, String task, String phoneNumber, String latitude, String longitude) {
         this.name = name;
         this.task = task;
         this.phoneNumber = phoneNumber;
+        this.latitude = latitude;
+        this.longitude = longitude;
     }
 
     public int getId() {
@@ -41,6 +49,18 @@ public class Truck {
     public void setId(int id){
         this.id = id;
     }
+
+    public void setLatitude(String latitude) {
+        this.latitude = latitude;
+    }
+
+    public void setLongitude(String longitude) {
+        this.longitude = longitude;
+    }
+
+    public String getLatitude() { return latitude; }
+
+    public String getLongitude() { return longitude; }
 
     public String getTask() {
         return task;
