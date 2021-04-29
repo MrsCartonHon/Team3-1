@@ -12,7 +12,9 @@
         android:roundIcon="@mipmap/ic_logo_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Team31">
-        <activity android:name=".formActivity"></activity>
+        <activity android:name=".ui.TaskItem"></activity>
+        <activity android:name=".ui.TaskActivity" />
+        <activity android:name=".formActivity" />
         <activity android:name=".SettingsActivity" />
         <activity android:name=".MangerHomeActivity" />
         <activity android:name=".DriverHomePage" />
@@ -27,7 +29,4 @@
         <activity android:name=".LoginActivity" />
     </application>
 
-
-
 </manifest>
-
