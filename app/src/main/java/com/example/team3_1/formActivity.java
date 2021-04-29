@@ -9,6 +9,8 @@ import android.widget.EditText;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.util.Random;
+
 
 public class formActivity extends AppCompatActivity {
     @Override
@@ -31,9 +33,13 @@ public class formActivity extends AppCompatActivity {
                     String truckName = name.getText().toString();
                     String taskName = task.getText().toString();
                     String contactNumber = contact.getText().toString();
+                    double latitude = 1 + (Math.random() * (100-1));
+                    double longitude = 1 + (Math.random() * (100-1));
                     replyIntent.putExtra("truck_name", truckName);
                     replyIntent.putExtra("truck_task", taskName);
                     replyIntent.putExtra("truck_contact", contactNumber);
+                    replyIntent.putExtra("truck_latitude", String.valueOf(latitude));
+                    replyIntent.putExtra("truck_longitude", String.valueOf(longitude));
                     setResult(RESULT_OK, replyIntent);
                 }
                 finish();

@@ -147,7 +147,7 @@ public class TruckFragment extends Fragment implements TruckListAdapter.OnTruckD
         super.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == NEW_TRUCK_ACTIVITY_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
-            Truck truck = new Truck(data.getStringExtra("truck_name"), data.getStringExtra("truck_task"), data.getStringExtra("truck_contact"));
+            Truck truck = new Truck(data.getStringExtra("truck_name"), data.getStringExtra("truck_task"), data.getStringExtra("truck_contact"), data.getStringExtra("truck_latitude"), data.getStringExtra("truck_longitude"));
             mTruckViewModel.insert(truck);
         } else {
             Toast.makeText(getContext(), R.string.new_truck_error_message, Toast.LENGTH_LONG).show();

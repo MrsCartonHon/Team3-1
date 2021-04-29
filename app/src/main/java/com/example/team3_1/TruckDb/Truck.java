@@ -26,10 +26,12 @@ public class Truck {
     private String longitude;
 
 
-    public Truck(String name, String task, String phoneNumber) {
+    public Truck(String name, String task, String phoneNumber, String latitude, String longitude) {
         this.name = name;
         this.task = task;
         this.phoneNumber = phoneNumber;
+        this.latitude = latitude;
+        this.longitude = longitude;
     }
 
     public int getId() {
