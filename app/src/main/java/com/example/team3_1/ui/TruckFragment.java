@@ -133,7 +133,6 @@ public class TruckFragment extends Fragment implements TruckListAdapter.OnTruckD
     public void AddTruck(MenuItem item) {
         Intent intent = new Intent(getContext(), formActivity.class);
         startActivityForResult(intent, NEW_TRUCK_ACTIVITY_REQUEST_CODE);
-
     }
 
     @Override

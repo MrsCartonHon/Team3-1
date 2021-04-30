@@ -11,7 +11,7 @@ import androidx.sqlite.db.SupportSQLiteDatabase;
 
 @Database(entities = {Task.class}, version = 1,  exportSchema = false)
 public abstract class TaskDatabase extends RoomDatabase {
-    public abstract TaskDatabase taskDao();
+    public abstract TaskDao taskDao();
 
     private static TaskDatabase INSTANCE;
 
