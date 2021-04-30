@@ -15,11 +15,15 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import com.example.team3_1.TruckDb.Truck;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProviders;
 
-import com.example.team3_1.MainActivity;
 import com.example.team3_1.R;
+import com.example.team3_1.TruckDb.TruckViewModel;
 import com.mapbox.android.core.location.LocationEngine;
 import com.mapbox.android.core.location.LocationEngineCallback;
 import com.mapbox.android.core.location.LocationEngineProvider;
@@ -61,7 +65,9 @@ public class MapFragment extends Fragment implements PermissionsListener, OnMapR
     private MarkerView markerView;
     private SymbolManager symbolManager;
     private Symbol symbol;
-    Boolean isPopupDisplaying = false;
+    private Boolean isPopupDisplaying = false;
+    private TruckViewModel mTruckViewModel;
+
 
     public MapFragment() {
         super(R.layout.map_fragment);
@@ -78,6 +84,20 @@ public class MapFragment extends Fragment implements PermissionsListener, OnMapR
         mapView = (MapView) view.findViewById(R.id.mapView);
         mapView.onCreate(savedInstanceState);
         mapView.getMapAsync(this);
+
+        // Get a new or existing ViewModel from the ViewModelProvider.
+        mTruckViewModel = ViewModelProviders.of(this).get(TruckViewModel.class);
+
+        // Add an observer on the LiveData returned by getAlphabetizedWords.
+        // The onChanged() method fires when the observed data changes and the activity is
+        // in the foreground.
+        mTruckViewModel.getAllTrucks().observe(getViewLifecycleOwner(), new Observer<List<Truck>>() {
+            @Override
+            public void onChanged(@Nullable final List<Truck> trucks) {
+                // Update the cached copy of the words in the adapter.
+                displayTrucks(trucks);
+            }
+        });
 
 
         return view;
@@ -221,6 +241,11 @@ public class MapFragment extends Fragment implements PermissionsListener, OnMapR
         } else {
             Toast.makeText(getActivity(), R.string.user_location_permission_not_granted, Toast.LENGTH_LONG).show();
         }
+    }
+
+
+    private void displayTrucks(List<Truck> trucks){
+
     }
 
 
