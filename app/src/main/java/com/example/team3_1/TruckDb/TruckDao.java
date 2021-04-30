@@ -11,8 +11,6 @@ import java.util.List;
 @Dao
 public interface TruckDao {
 
-    //public ArrayList<TruckItem> mTruckList = null;
-
     @Query("SELECT * FROM truck_table")
     LiveData<List<Truck>> getAllTrucks();
 
