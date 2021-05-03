@@ -22,6 +22,8 @@ import androidx.lifecycle.ViewModelProviders;
 
 import com.example.team3_1.R;
 import com.example.team3_1.TruckDb.TruckViewModel;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import com.mapbox.android.core.location.LocationEngine;
 import com.mapbox.android.core.location.LocationEngineCallback;
 import com.mapbox.android.core.location.LocationEngineProvider;
@@ -47,6 +49,7 @@ import com.mapbox.mapboxsdk.plugins.markerview.MarkerViewManager;
 import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
 
 import java.lang.ref.WeakReference;
+import java.util.ArrayList;
 import java.util.List;
 
 public class MapFragment extends Fragment implements PermissionsListener, OnMapReadyCallback {
@@ -65,6 +68,8 @@ public class MapFragment extends Fragment implements PermissionsListener, OnMapR
     private Boolean isPopupDisplaying = false;
     private TruckViewModel mTruckViewModel;
     private List<Truck> mTruckList;
+    private ArrayList<SymbolOptions> symbolOptionsList;
+    private ArrayList<MarkerView> markerViewList;
 
 
     public MapFragment() {
@@ -107,6 +112,8 @@ public class MapFragment extends Fragment implements PermissionsListener, OnMapR
 
         //make markerviewmanager
         markerViewManager = new MarkerViewManager(mapView, mapboxMap);
+        markerViewList = new ArrayList<MarkerView>();
+        symbolOptionsList = new ArrayList<SymbolOptions>();
 
         // Use an XML layout to create a View object
         View customView = LayoutInflater.from(getActivity()).inflate(
@@ -134,14 +141,17 @@ public class MapFragment extends Fragment implements PermissionsListener, OnMapR
                 symbolManager = new SymbolManager(mapView, mapboxMap, style);
 
                 symbolManager.addClickListener(symbol -> {
+                    JsonObject object = (JsonObject) symbol.getData();
+                    int pos = object.get("pos").getAsInt();
                     if(!isPopupDisplaying){ //show or remove pop up depending on if it already is showing
-                        markerViewManager.addMarker(markerView);//show pop up when clicked
+                        markerViewManager.addMarker(markerViewList.get(pos));//show pop up when clicked
                     } else {
-                        markerViewManager.removeMarker(markerView); //remove marker
+                        markerViewManager.removeMarker(markerViewList.get(pos)); //remove marker
                     }
                     isPopupDisplaying = !isPopupDisplaying;
                     return false;
                 });
+
                 // Set non-data-driven properties.
                 symbolManager.setIconAllowOverlap(true);
                 symbolManager.setTextAllowOverlap(true);
@@ -245,6 +255,7 @@ public class MapFragment extends Fragment implements PermissionsListener, OnMapR
 
     private void displayTrucks(List<Truck> trucks){
         trucks.forEach(truck -> displayTruck(truck));
+        symbolManager.create(symbolOptionsList);
     }
 
     private void displayTruck(Truck truck){
@@ -264,16 +275,24 @@ public class MapFragment extends Fragment implements PermissionsListener, OnMapR
         double truckLat = Double.parseDouble(truck.getLatitude());
         double truckLong = Double.parseDouble(truck.getLongitude());
 
+        MarkerView markerView = new MarkerView(new LatLng(truckLat, truckLong), customView);
+        markerViewList.add(markerView);
+        String jsonString = (String)"{pos : " + (markerViewList.size()-1) + "}";
+        JsonObject jsonObject = (JsonObject) JsonParser.parseString(jsonString);
+
+
+
         // Create a symbol at the specified location.
         SymbolOptions symbolOptions = new SymbolOptions()
                 .withLatLng(new LatLng(truckLat, truckLong)) //these are the coordinates of the truck
                 .withIconImage("marker-ic-id")
+                .withData(jsonObject)
                 .withIconSize(1.3f);
         //defines marker view(the pop up bubble) but doesnt display it yet
-        markerView = new MarkerView(new LatLng(truckLat, truckLong), customView);
 
 
-        symbol = symbolManager.create(symbolOptions);
+        symbolOptionsList.add(symbolOptions);
+
     }
 
 

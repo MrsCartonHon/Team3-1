@@ -33,8 +33,8 @@ public class formActivity extends AppCompatActivity {
                     String truckName = name.getText().toString();
                     String taskName = task.getText().toString();
                     String contactNumber = contact.getText().toString();
-                    double latitude = 1 + (Math.random() * (100-1));
-                    double longitude = 1 + (Math.random() * (100-1));
+                    double latitude = (Math.random() * ((42 - 41) + 1)) + 41;
+                    double longitude = (Math.random() * ((-90 + 91) + 1)) - 91;
                     replyIntent.putExtra("truck_name", truckName);
                     replyIntent.putExtra("truck_task", taskName);
                     replyIntent.putExtra("truck_contact", contactNumber);
