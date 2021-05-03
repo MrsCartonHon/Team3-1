@@ -18,34 +18,47 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import java.util.Collections;
+import java.util.List;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import com.example.team3_1.ui.TaskAdapter;
 
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.PopupMenu;
+import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 
 import com.example.team3_1.R;
+import com.example.team3_1.TaskDb.Task;
+import com.example.team3_1.TaskDb.TaskViewModel;
+import com.example.team3_1.TruckDb.Truck;
+import com.example.team3_1.TruckDb.TruckViewModel;
+import com.example.team3_1.TruckListAdapter;
 import com.example.team3_1.formActivity;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 
-public class TasksFragment extends Fragment {
+public class TasksFragment extends Fragment implements TaskAdapter.OnTaskDelete {
     private static final int NEW_TASK_ACTIVITY_REQUEST_CODE = 1;
     private ArrayList<TaskItem> mExampleList;
     private RecyclerView mRecyclerView;
-    private RecyclerView.Adapter mAdapter;
+    private TaskAdapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
     private Button buttonRemove;
     private EditText editTextInsert;
     private EditText editTextRemove;
     private FloatingActionButton buttonInsert;
+    private TaskViewModel mTaskViewModel;
+    private List<Task> mTaskList;
 
     public TasksFragment() {
         super(R.layout.tasks_fragment);
@@ -69,6 +82,20 @@ public class TasksFragment extends Fragment {
             }
         });
 
+        // Get a new or existing ViewModel from the ViewModelProvider.
+        mTaskViewModel = ViewModelProviders.of(this).get(TaskViewModel.class);
+
+        // Add an observer on the LiveData returned by getAlphabetizedWords.
+        // The onChanged() method fires when the observed data changes and the activity is
+        // in the foreground.
+        mTaskViewModel.getAllTask().observe(getViewLifecycleOwner(), new Observer<List<Task>>() {
+            @Override
+            public void onChanged(@Nullable final List<Task> tasks) {
+                // Update the cached copy of the words in the adapter.
+                mAdapter.setTasks(tasks);
+            }
+        });
+
         return view;
 
     }
@@ -76,8 +103,8 @@ public class TasksFragment extends Fragment {
         super.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == NEW_TASK_ACTIVITY_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
-            TaskItem task = new TaskItem(data.getStringExtra("task_task"),"text");
-            mExampleList.add(position, new TaskItem("Task", string));
+            Task task = new Task(data.getStringExtra("task_task"));
+            mTaskViewModel.insert(task);
         } else {
             Toast.makeText(getContext(), R.string.new_truck_error_message, Toast.LENGTH_LONG).show();
         }
@@ -92,16 +119,14 @@ public class TasksFragment extends Fragment {
         mRecyclerView = v.findViewById(R.id.recyclerView);
         mRecyclerView.setHasFixedSize(true);
         mLayoutManager = new LinearLayoutManager(getActivity());
-        mAdapter = new TaskAdapter(mExampleList);
+        mAdapter = new TaskAdapter(mTaskList, this);
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.setAdapter(mAdapter);
     }
 
     public void createTaskList() {
-        mExampleList = new ArrayList<>();
-        mExampleList.add(new TaskItem("Task ", "Go harvest grain"));
-        mExampleList.add(new TaskItem("Task ", "Refuel the combine"));
-        mExampleList.add(new TaskItem("Task ", "Fertilize field 3"));
+        mTaskList = new ArrayList<>();
+
     }
 
     public void insertItem(int position) {
@@ -123,7 +148,7 @@ public class TasksFragment extends Fragment {
 
                 switch (item.getItemId()) {
                     case R.id.menu_new_task:
-                      //  addTask(item);
+                      addTask(item);
 
                         return true;
                     default:
@@ -136,5 +161,9 @@ public class TasksFragment extends Fragment {
         popup.show();
     }
 
+    @Override
+    public void deleteTask(Task task) {
+        mTaskViewModel.deleteTask(task);
+    }
 }
 
