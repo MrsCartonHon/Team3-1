@@ -2,8 +2,6 @@ package com.example.team3_1.ui;
 
 import android.annotation.SuppressLint;
 import android.graphics.BitmapFactory;
-import android.graphics.Color;
-import android.graphics.drawable.Drawable;
 import android.location.Location;
 import android.os.Bundle;
 import android.util.Log;
@@ -17,7 +15,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import com.example.team3_1.TruckDb.Truck;
-import androidx.core.content.ContextCompat;
+
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
@@ -35,7 +33,6 @@ import com.mapbox.mapboxsdk.Mapbox;
 import com.mapbox.mapboxsdk.geometry.LatLng;
 import com.mapbox.mapboxsdk.location.LocationComponent;
 import com.mapbox.mapboxsdk.location.LocationComponentActivationOptions;
-import com.mapbox.mapboxsdk.location.LocationComponentOptions;
 import com.mapbox.mapboxsdk.location.modes.CameraMode;
 import com.mapbox.mapboxsdk.location.modes.RenderMode;
 import com.mapbox.mapboxsdk.maps.MapView;
@@ -67,6 +64,7 @@ public class MapFragment extends Fragment implements PermissionsListener, OnMapR
     private Symbol symbol;
     private Boolean isPopupDisplaying = false;
     private TruckViewModel mTruckViewModel;
+    private List<Truck> mTruckList;
 
 
     public MapFragment() {
@@ -95,7 +93,7 @@ public class MapFragment extends Fragment implements PermissionsListener, OnMapR
             @Override
             public void onChanged(@Nullable final List<Truck> trucks) {
                 // Update the cached copy of the words in the adapter.
-                displayTrucks(trucks);
+                mTruckList = trucks;
             }
         });
 
@@ -142,26 +140,27 @@ public class MapFragment extends Fragment implements PermissionsListener, OnMapR
                         markerViewManager.removeMarker(markerView); //remove marker
                     }
                     isPopupDisplaying = !isPopupDisplaying;
-
-
                     return false;
                 });
                 // Set non-data-driven properties.
                 symbolManager.setIconAllowOverlap(true);
                 symbolManager.setTextAllowOverlap(true);
 
+                displayTrucks(mTruckList);
+                /*
                 // Create a symbol at the specified location.
                 SymbolOptions symbolOptions = new SymbolOptions()
                         .withLatLng(new LatLng(41.556019, -90.495431)) //these are the coordinates of the truck
                         .withIconImage("marker-ic-id")
                         .withIconSize(1.3f);
                 //defines marker view(the pop up bubble) but doesnt display it yet
-
                 markerView = new MarkerView(new LatLng(41.556019, -90.495431), customView);
 
                 // Use the manager to draw the symbol.
                 symbol = symbolManager.create(symbolOptions);
 
+
+                 */
                 enableLocationComponent(style);
             }
         });
@@ -245,7 +244,36 @@ public class MapFragment extends Fragment implements PermissionsListener, OnMapR
 
 
     private void displayTrucks(List<Truck> trucks){
+        trucks.forEach(truck -> displayTruck(truck));
+    }
 
+    private void displayTruck(Truck truck){
+        // Use an XML layout to create a View object
+        View customView = LayoutInflater.from(getActivity()).inflate(R.layout.marker_view_bubble, null);
+        customView.setLayoutParams(new FrameLayout.LayoutParams(WRAP_CONTENT, WRAP_CONTENT));
+
+        // Set the View's TextViews with content
+        TextView titleTextView = customView.findViewById(R.id.marker_window_title);
+        titleTextView.setText(R.string.draw_marker_options_title);
+
+        TextView snippetTextView = customView.findViewById(R.id.marker_window_snippet);
+        snippetTextView.setText(R.string.draw_marker_options_snippet);
+
+        titleTextView.setText(truck.getName());
+
+        double truckLat = Double.parseDouble(truck.getLatitude());
+        double truckLong = Double.parseDouble(truck.getLongitude());
+
+        // Create a symbol at the specified location.
+        SymbolOptions symbolOptions = new SymbolOptions()
+                .withLatLng(new LatLng(truckLat, truckLong)) //these are the coordinates of the truck
+                .withIconImage("marker-ic-id")
+                .withIconSize(1.3f);
+        //defines marker view(the pop up bubble) but doesnt display it yet
+        markerView = new MarkerView(new LatLng(truckLat, truckLong), customView);
+
+
+        symbol = symbolManager.create(symbolOptions);
     }
 
 
