@@ -296,7 +296,7 @@ public class MapFragment extends Fragment implements PermissionsListener, OnMapR
         if (locationEngine != null) {
             locationEngine.removeLocationUpdates(callback);
         }
-        markerViewManager.onDestroy();
+       // markerViewManager.onDestroy();
         mapView.onDestroy();
     }
 
