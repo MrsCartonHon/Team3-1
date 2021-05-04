@@ -59,6 +59,7 @@ public class TasksFragment extends Fragment implements TaskAdapter.OnTaskDelete 
     private FloatingActionButton buttonInsert;
     private TaskViewModel mTaskViewModel;
     private List<Task> mTaskList;
+    private Button deleteButton;
 
     public TasksFragment() {
         super(R.layout.tasks_fragment);
@@ -77,10 +78,20 @@ public class TasksFragment extends Fragment implements TaskAdapter.OnTaskDelete 
             @Override
             public void onClick(View v) {
                 //  int position = Integer.parseInt(editTextInsert.getText().toString());
-                showFabPopUp(v);
+         //       showFabPopUp(v);
 
             }
         });
+         deleteButton = view.findViewById(R.id.dragEnd);
+         deleteButton.setOnClickListener(new View.OnClickListener() {
+             @Override
+            public void onClick(View v) {
+               int position = 0;
+                 deleteTask(position+1);
+
+            }
+        });
+
 
         // Get a new or existing ViewModel from the ViewModelProvider.
         mTaskViewModel = ViewModelProviders.of(this).get(TaskViewModel.class);
@@ -99,6 +110,7 @@ public class TasksFragment extends Fragment implements TaskAdapter.OnTaskDelete 
         return view;
 
     }
+
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
@@ -115,6 +127,7 @@ public class TasksFragment extends Fragment implements TaskAdapter.OnTaskDelete 
 
     }
 
+
     public void buildRecyclerView(View v) {
         mRecyclerView = v.findViewById(R.id.recyclerView);
         mRecyclerView.setHasFixedSize(true);
@@ -128,7 +141,11 @@ public class TasksFragment extends Fragment implements TaskAdapter.OnTaskDelete 
         mTaskList = new ArrayList<>();
 
     }
-
+    public void deleteTask(int position)
+    {
+        mTaskList.remove(position+1);
+        mAdapter.notifyItemRemoved(position);
+    }
     public void insertItem(int position) {
         String string = editTextInsert.getText().toString();
         mExampleList.add(position, new TaskItem("Task", string));

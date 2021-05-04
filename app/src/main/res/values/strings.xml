@@ -26,4 +26,10 @@
     <string name="draw_marker_options_snippet">draw_marker_options_snippet</string>
     <string name="menu_new_task">menu_new_task</string>
     <string name="new_truck_error_message">You must enter all info to create new truck!</string>
+
+    <string-array name="trucks">
+        <item>Truck 1</item>
+        <item>Truck 2</item>
+        <item>Truck 3</item>
+    </string-array>
 </resources>

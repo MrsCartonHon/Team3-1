@@ -31,4 +31,10 @@ android:tag="cards main container">
     app:layout_constraintEnd_toEndOf="parent"
     app:srcCompat="@drawable/new_icon" />
 
+    <Button
+        android:id="@+id/deleteButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Delete Truck" />
+
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
