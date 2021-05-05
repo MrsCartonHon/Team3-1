@@ -133,7 +133,7 @@ public class MapFragment extends Fragment implements PermissionsListener, OnMapR
                 //define marker images
                 style.addImage(
                         "marker-ic-id",
-                        BitmapFactory.decodeResource(view.getResources(), R.drawable.mapbox_marker_icon_default), false
+                        BitmapFactory.decodeResource(view.getResources(), R.drawable.ic_truck_map), false
                 );
 
 

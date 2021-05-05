@@ -13,6 +13,6 @@ android:layout_height="match_parent">
         android:id="@+id/mapView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        mapbox:mapbox_cameraZoom="14"/>
+        mapbox:mapbox_cameraZoom="12"/>
 
 </FrameLayout>
