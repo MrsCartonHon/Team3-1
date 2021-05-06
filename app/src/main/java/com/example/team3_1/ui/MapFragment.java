@@ -62,9 +62,7 @@ public class MapFragment extends Fragment implements PermissionsListener, OnMapR
     private LocationEngine locationEngine;
     private LocationChangeListeningActivityLocationCallback callback = new LocationChangeListeningActivityLocationCallback(this);
     private MarkerViewManager markerViewManager;
-    private MarkerView markerView;
     private SymbolManager symbolManager;
-    private Symbol symbol;
     private Boolean isPopupDisplaying = false;
     private TruckViewModel mTruckViewModel;
     private List<Truck> mTruckList;
@@ -157,20 +155,7 @@ public class MapFragment extends Fragment implements PermissionsListener, OnMapR
                 symbolManager.setTextAllowOverlap(true);
 
                 displayTrucks(mTruckList);
-                /*
-                // Create a symbol at the specified location.
-                SymbolOptions symbolOptions = new SymbolOptions()
-                        .withLatLng(new LatLng(41.556019, -90.495431)) //these are the coordinates of the truck
-                        .withIconImage("marker-ic-id")
-                        .withIconSize(1.3f);
-                //defines marker view(the pop up bubble) but doesnt display it yet
-                markerView = new MarkerView(new LatLng(41.556019, -90.495431), customView);
 
-                // Use the manager to draw the symbol.
-                symbol = symbolManager.create(symbolOptions);
-
-
-                 */
                 enableLocationComponent(style);
             }
         });
@@ -265,12 +250,12 @@ public class MapFragment extends Fragment implements PermissionsListener, OnMapR
 
         // Set the View's TextViews with content
         TextView titleTextView = customView.findViewById(R.id.marker_window_title);
-        titleTextView.setText(R.string.draw_marker_options_title);
+        titleTextView.setText(truck.getName());
 
         TextView snippetTextView = customView.findViewById(R.id.marker_window_snippet);
-        snippetTextView.setText(R.string.draw_marker_options_snippet);
+        snippetTextView.setText(truck.getTask());
 
-        titleTextView.setText(truck.getName());
+
 
         double truckLat = Double.parseDouble(truck.getLatitude());
         double truckLong = Double.parseDouble(truck.getLongitude());
