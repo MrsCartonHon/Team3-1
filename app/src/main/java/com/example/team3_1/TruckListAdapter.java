@@ -15,6 +15,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.team3_1.TruckDb.Truck;
+import com.google.android.material.button.MaterialButton;
 
 import java.util.List;
 
@@ -34,9 +35,9 @@ public class TruckListAdapter extends RecyclerView.Adapter<TruckListAdapter.Truc
         public TextView mETA;
         public ImageView mCurrentTaskIcon;
         public ImageView mLocationIcon;
-        public Button mMapButton;
-        public Button mContactButton;
-        public Button mNewTaskButton;
+        public MaterialButton mMapButton;
+        public MaterialButton mContactButton;
+        public MaterialButton mNewTaskButton;
 
         public TruckViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -73,8 +74,10 @@ public class TruckListAdapter extends RecyclerView.Adapter<TruckListAdapter.Truc
         String nameText = currentItem.getName();
         String taskText = currentItem.getTask();
         String phoneNumber = currentItem.getPhoneNumber();
+        int color = currentItem.getColor();
 
         holder.mName.setText(nameText);
+        holder.mName.setTextColor(color);
         holder.mTask.setText(taskText);
         holder.mMoreOptions.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -105,9 +108,10 @@ public class TruckListAdapter extends RecyclerView.Adapter<TruckListAdapter.Truc
         //holder.mETA.setText(currentItem.getETA());
         //holder.mCurrentTaskIcon.setImageResource(currentItem.getCurrentTaskIcon());
         //holder.mLocationIcon.setImageResource(currentItem.getLocationIcon());
-        //holder.mMapButton.setText(currentItem.getMapButton());
-        //holder.mContactButton.setText(currentItem.getContactButton());
-        //holder.mNewTaskButton.setText(currentItem.getNewTaskButton());
+        //holder.mMapButton.setTextColor(color);
+
+        //holder.mContactButton.setTextColor(color);
+        //holder.mNewTaskButton.setTextColor(color);
 
 
     }

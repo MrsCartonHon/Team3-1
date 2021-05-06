@@ -20,6 +20,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.team3_1.R;
+import com.example.team3_1.RandomColors;
 import com.example.team3_1.TruckDb.Truck;
 import com.example.team3_1.TruckDb.TruckViewModel;
 import com.example.team3_1.TruckListAdapter;
@@ -28,6 +29,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class TruckFragment extends Fragment implements TruckListAdapter.OnTruckDelete {
 
@@ -44,6 +46,7 @@ public class TruckFragment extends Fragment implements TruckListAdapter.OnTruckD
     private FloatingActionButton buttonInsert;
     private View view;
     private TruckViewModel mTruckViewModel;
+    private RandomColors colorGenerator;
 
 
     @Override
@@ -83,6 +86,7 @@ public class TruckFragment extends Fragment implements TruckListAdapter.OnTruckD
             }
         });
 
+        colorGenerator = new RandomColors();
 
         return view;
     }
@@ -146,12 +150,11 @@ public class TruckFragment extends Fragment implements TruckListAdapter.OnTruckD
         super.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == NEW_TRUCK_ACTIVITY_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
-            Truck truck = new Truck(data.getStringExtra("truck_name"), data.getStringExtra("truck_task"), data.getStringExtra("truck_contact"), data.getStringExtra("truck_latitude"), data.getStringExtra("truck_longitude"));
+
+            Truck truck = new Truck(data.getStringExtra("truck_name"), data.getStringExtra("truck_task"), data.getStringExtra("truck_contact"), data.getStringExtra("truck_latitude"), data.getStringExtra("truck_longitude"), colorGenerator.getColor());
             mTruckViewModel.insert(truck);
         } else {
             Toast.makeText(getContext(), R.string.new_truck_error_message, Toast.LENGTH_LONG).show();
         }
     }
-
-
 }
