@@ -1,6 +1,8 @@
 package com.example.team3_1;
 
 import android.content.Intent;
+import android.content.res.ColorStateList;
+import android.graphics.drawable.Icon;
 import android.view.LayoutInflater;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -12,6 +14,7 @@ import android.widget.PopupMenu;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.core.graphics.drawable.IconCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.team3_1.TruckDb.Truck;
@@ -106,12 +109,14 @@ public class TruckListAdapter extends RecyclerView.Adapter<TruckListAdapter.Truc
         });
         //holder.mMoreOptions.setImageResource(currentItem.getMoreOptions());
         //holder.mETA.setText(currentItem.getETA());
-        //holder.mCurrentTaskIcon.setImageResource(currentItem.getCurrentTaskIcon());
-        //holder.mLocationIcon.setImageResource(currentItem.getLocationIcon());
-        //holder.mMapButton.setTextColor(color);
-
-        //holder.mContactButton.setTextColor(color);
-        //holder.mNewTaskButton.setTextColor(color);
+        holder.mCurrentTaskIcon.setImageTintList(ColorStateList.valueOf(color));
+        holder.mLocationIcon.setImageTintList(ColorStateList.valueOf(color));
+        holder.mMapButton.setTextColor(color);
+        holder.mMapButton.setIconTint(ColorStateList.valueOf(color));
+        holder.mContactButton.setTextColor(color);
+        holder.mContactButton.setIconTint(ColorStateList.valueOf(color));
+        holder.mNewTaskButton.setTextColor(color);
+        holder.mNewTaskButton.setIconTint(ColorStateList.valueOf(color));
 
 
     }
