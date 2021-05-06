@@ -2,8 +2,6 @@ package com.example.team3_1.ui;
 
 import android.annotation.SuppressLint;
 import android.graphics.BitmapFactory;
-import android.graphics.Color;
-import android.graphics.drawable.Drawable;
 import android.location.Location;
 import android.os.Bundle;
 import android.util.Log;
@@ -17,13 +15,15 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import com.example.team3_1.TruckDb.Truck;
-import androidx.core.content.ContextCompat;
+
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.example.team3_1.R;
 import com.example.team3_1.TruckDb.TruckViewModel;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import com.mapbox.android.core.location.LocationEngine;
 import com.mapbox.android.core.location.LocationEngineCallback;
 import com.mapbox.android.core.location.LocationEngineProvider;
@@ -35,7 +35,6 @@ import com.mapbox.mapboxsdk.Mapbox;
 import com.mapbox.mapboxsdk.geometry.LatLng;
 import com.mapbox.mapboxsdk.location.LocationComponent;
 import com.mapbox.mapboxsdk.location.LocationComponentActivationOptions;
-import com.mapbox.mapboxsdk.location.LocationComponentOptions;
 import com.mapbox.mapboxsdk.location.modes.CameraMode;
 import com.mapbox.mapboxsdk.location.modes.RenderMode;
 import com.mapbox.mapboxsdk.maps.MapView;
@@ -50,6 +49,7 @@ import com.mapbox.mapboxsdk.plugins.markerview.MarkerViewManager;
 import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
 
 import java.lang.ref.WeakReference;
+import java.util.ArrayList;
 import java.util.List;
 
 public class MapFragment extends Fragment implements PermissionsListener, OnMapReadyCallback {
@@ -62,11 +62,12 @@ public class MapFragment extends Fragment implements PermissionsListener, OnMapR
     private LocationEngine locationEngine;
     private LocationChangeListeningActivityLocationCallback callback = new LocationChangeListeningActivityLocationCallback(this);
     private MarkerViewManager markerViewManager;
-    private MarkerView markerView;
     private SymbolManager symbolManager;
-    private Symbol symbol;
     private Boolean isPopupDisplaying = false;
     private TruckViewModel mTruckViewModel;
+    private List<Truck> mTruckList;
+    private ArrayList<SymbolOptions> symbolOptionsList;
+    private ArrayList<MarkerView> markerViewList;
 
 
     public MapFragment() {
@@ -95,7 +96,7 @@ public class MapFragment extends Fragment implements PermissionsListener, OnMapR
             @Override
             public void onChanged(@Nullable final List<Truck> trucks) {
                 // Update the cached copy of the words in the adapter.
-                displayTrucks(trucks);
+                mTruckList = trucks;
             }
         });
 
@@ -109,6 +110,8 @@ public class MapFragment extends Fragment implements PermissionsListener, OnMapR
 
         //make markerviewmanager
         markerViewManager = new MarkerViewManager(mapView, mapboxMap);
+        markerViewList = new ArrayList<MarkerView>();
+        symbolOptionsList = new ArrayList<SymbolOptions>();
 
         // Use an XML layout to create a View object
         View customView = LayoutInflater.from(getActivity()).inflate(
@@ -128,7 +131,7 @@ public class MapFragment extends Fragment implements PermissionsListener, OnMapR
                 //define marker images
                 style.addImage(
                         "marker-ic-id",
-                        BitmapFactory.decodeResource(view.getResources(), R.drawable.mapbox_marker_icon_default), false
+                        BitmapFactory.decodeResource(view.getResources(), R.drawable.ic_truck_map), false
                 );
 
 
@@ -136,31 +139,22 @@ public class MapFragment extends Fragment implements PermissionsListener, OnMapR
                 symbolManager = new SymbolManager(mapView, mapboxMap, style);
 
                 symbolManager.addClickListener(symbol -> {
+                    JsonObject object = (JsonObject) symbol.getData();
+                    int pos = object.get("pos").getAsInt();
                     if(!isPopupDisplaying){ //show or remove pop up depending on if it already is showing
-                        markerViewManager.addMarker(markerView);//show pop up when clicked
+                        markerViewManager.addMarker(markerViewList.get(pos));//show pop up when clicked
                     } else {
-                        markerViewManager.removeMarker(markerView); //remove marker
+                        markerViewManager.removeMarker(markerViewList.get(pos)); //remove marker
                     }
                     isPopupDisplaying = !isPopupDisplaying;
-
-
                     return false;
                 });
+
                 // Set non-data-driven properties.
                 symbolManager.setIconAllowOverlap(true);
                 symbolManager.setTextAllowOverlap(true);
 
-                // Create a symbol at the specified location.
-                SymbolOptions symbolOptions = new SymbolOptions()
-                        .withLatLng(new LatLng(41.556019, -90.495431)) //these are the coordinates of the truck
-                        .withIconImage("marker-ic-id")
-                        .withIconSize(1.3f);
-                //defines marker view(the pop up bubble) but doesnt display it yet
-
-                markerView = new MarkerView(new LatLng(41.556019, -90.495431), customView);
-
-                // Use the manager to draw the symbol.
-                symbol = symbolManager.create(symbolOptions);
+                displayTrucks(mTruckList);
 
                 enableLocationComponent(style);
             }
@@ -245,6 +239,44 @@ public class MapFragment extends Fragment implements PermissionsListener, OnMapR
 
 
     private void displayTrucks(List<Truck> trucks){
+        trucks.forEach(truck -> displayTruck(truck));
+        symbolManager.create(symbolOptionsList);
+    }
+
+    private void displayTruck(Truck truck){
+        // Use an XML layout to create a View object
+        View customView = LayoutInflater.from(getActivity()).inflate(R.layout.marker_view_bubble, null);
+        customView.setLayoutParams(new FrameLayout.LayoutParams(WRAP_CONTENT, WRAP_CONTENT));
+
+        // Set the View's TextViews with content
+        TextView titleTextView = customView.findViewById(R.id.marker_window_title);
+        titleTextView.setText(truck.getName());
+
+        TextView snippetTextView = customView.findViewById(R.id.marker_window_snippet);
+        snippetTextView.setText(truck.getTask());
+
+
+
+        double truckLat = Double.parseDouble(truck.getLatitude());
+        double truckLong = Double.parseDouble(truck.getLongitude());
+
+        MarkerView markerView = new MarkerView(new LatLng(truckLat, truckLong), customView);
+        markerViewList.add(markerView);
+        String jsonString = (String)"{pos : " + (markerViewList.size()-1) + "}";
+        JsonObject jsonObject = (JsonObject) JsonParser.parseString(jsonString);
+
+
+
+        // Create a symbol at the specified location.
+        SymbolOptions symbolOptions = new SymbolOptions()
+                .withLatLng(new LatLng(truckLat, truckLong)) //these are the coordinates of the truck
+                .withIconImage("marker-ic-id")
+                .withData(jsonObject)
+                .withIconSize(1.3f);
+        //defines marker view(the pop up bubble) but doesnt display it yet
+
+
+        symbolOptionsList.add(symbolOptions);
 
     }
 
