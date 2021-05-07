@@ -25,13 +25,17 @@ public class Truck {
     @ColumnInfo(name = "Longitude")
     private String longitude;
 
+    @ColumnInfo(name = "color")
+    private int color;
 
-    public Truck(String name, String task, String phoneNumber, String latitude, String longitude) {
+
+    public Truck(String name, String task, String phoneNumber, String latitude, String longitude, int color) {
         this.name = name;
         this.task = task;
         this.phoneNumber = phoneNumber;
         this.latitude = latitude;
         this.longitude = longitude;
+        this.color = color;
     }
 
     public int getId() {
@@ -76,6 +80,11 @@ public class Truck {
 
     public void setPhoneNumber(String phoneNumber){
         this.phoneNumber = phoneNumber;
+    }
+
+    public int getColor(){ return color;}
+    private void setColor(int color){
+        this.color = color;
     }
 
 }

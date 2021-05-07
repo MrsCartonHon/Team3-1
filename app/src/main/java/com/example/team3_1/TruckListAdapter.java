@@ -1,6 +1,9 @@
 package com.example.team3_1;
 
 import android.content.Intent;
+import android.content.res.ColorStateList;
+import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Icon;
 import android.view.LayoutInflater;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -12,9 +15,11 @@ import android.widget.PopupMenu;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.core.graphics.drawable.IconCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.team3_1.TruckDb.Truck;
+import com.google.android.material.button.MaterialButton;
 
 import java.util.List;
 
@@ -34,9 +39,9 @@ public class TruckListAdapter extends RecyclerView.Adapter<TruckListAdapter.Truc
         public TextView mETA;
         public ImageView mCurrentTaskIcon;
         public ImageView mLocationIcon;
-        public Button mMapButton;
-        public Button mContactButton;
-        public Button mNewTaskButton;
+        public MaterialButton mMapButton;
+        public MaterialButton mContactButton;
+        public MaterialButton mNewTaskButton;
 
         public TruckViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -73,8 +78,10 @@ public class TruckListAdapter extends RecyclerView.Adapter<TruckListAdapter.Truc
         String nameText = currentItem.getName();
         String taskText = currentItem.getTask();
         String phoneNumber = currentItem.getPhoneNumber();
+        int color = currentItem.getColor();
 
         holder.mName.setText(nameText);
+        holder.mName.setTextColor(color);
         holder.mTask.setText(taskText);
         holder.mMoreOptions.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -103,11 +110,14 @@ public class TruckListAdapter extends RecyclerView.Adapter<TruckListAdapter.Truc
         });
         //holder.mMoreOptions.setImageResource(currentItem.getMoreOptions());
         //holder.mETA.setText(currentItem.getETA());
-        //holder.mCurrentTaskIcon.setImageResource(currentItem.getCurrentTaskIcon());
-        //holder.mLocationIcon.setImageResource(currentItem.getLocationIcon());
-        //holder.mMapButton.setText(currentItem.getMapButton());
-        //holder.mContactButton.setText(currentItem.getContactButton());
-        //holder.mNewTaskButton.setText(currentItem.getNewTaskButton());
+        holder.mCurrentTaskIcon.setImageTintList(ColorStateList.valueOf(color));
+        holder.mLocationIcon.setImageTintList(ColorStateList.valueOf(color));
+        holder.mMapButton.setTextColor(color);
+        holder.mMapButton.setIconTint(ColorStateList.valueOf(color));
+        holder.mContactButton.setTextColor(color);
+        holder.mContactButton.setIconTint(ColorStateList.valueOf(color));
+        holder.mNewTaskButton.setTextColor(color);
+        holder.mNewTaskButton.setIconTint(ColorStateList.valueOf(color));
 
 
     }

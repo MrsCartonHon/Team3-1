@@ -2,6 +2,7 @@ package com.example.team3_1.ui;
 
 import android.annotation.SuppressLint;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.location.Location;
 import android.os.Bundle;
 import android.util.Log;
@@ -131,7 +132,7 @@ public class MapFragment extends Fragment implements PermissionsListener, OnMapR
                 //define marker images
                 style.addImage(
                         "marker-ic-id",
-                        BitmapFactory.decodeResource(view.getResources(), R.drawable.ic_truck_map), false
+                        BitmapFactory.decodeResource(view.getResources(), R.drawable.ic_truck_map), true
                 );
 
 
@@ -251,6 +252,7 @@ public class MapFragment extends Fragment implements PermissionsListener, OnMapR
         // Set the View's TextViews with content
         TextView titleTextView = customView.findViewById(R.id.marker_window_title);
         titleTextView.setText(truck.getName());
+        titleTextView.setTextColor(truck.getColor());
 
         TextView snippetTextView = customView.findViewById(R.id.marker_window_snippet);
         snippetTextView.setText(truck.getTask());
@@ -268,9 +270,12 @@ public class MapFragment extends Fragment implements PermissionsListener, OnMapR
 
 
         // Create a symbol at the specified location.
+        //convert color to string
+        String strColor = String.format("#%06X", 0xFFFFFF & truck.getColor());
         SymbolOptions symbolOptions = new SymbolOptions()
                 .withLatLng(new LatLng(truckLat, truckLong)) //these are the coordinates of the truck
                 .withIconImage("marker-ic-id")
+                .withIconColor(strColor)
                 .withData(jsonObject)
                 .withIconSize(1.3f);
         //defines marker view(the pop up bubble) but doesnt display it yet

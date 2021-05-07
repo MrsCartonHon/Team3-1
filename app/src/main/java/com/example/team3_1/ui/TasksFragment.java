@@ -49,13 +49,9 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 public class TasksFragment extends Fragment implements TaskAdapter.OnTaskDelete {
     private static final int NEW_TASK_ACTIVITY_REQUEST_CODE = 1;
-    private ArrayList<TaskItem> mExampleList;
     private RecyclerView mRecyclerView;
     private TaskAdapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
-    private Button buttonRemove;
-    private EditText editTextInsert;
-    private EditText editTextRemove;
     private FloatingActionButton buttonInsert;
     private TaskViewModel mTaskViewModel;
     private List<Task> mTaskList;
@@ -127,17 +123,6 @@ public class TasksFragment extends Fragment implements TaskAdapter.OnTaskDelete 
     public void createTaskList() {
         mTaskList = new ArrayList<>();
 
-    }
-
-    public void insertItem(int position) {
-        String string = editTextInsert.getText().toString();
-        mExampleList.add(position, new TaskItem("Task", string));
-        mAdapter.notifyItemInserted(position);
-    }
-
-    public void removeItem(int position) {
-        mExampleList.remove(position);
-        mAdapter.notifyItemRemoved(position);
     }
 
     public void showFabPopUp(View v) {
