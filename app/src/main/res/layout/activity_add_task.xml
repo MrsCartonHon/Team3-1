@@ -20,16 +20,25 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/taskInfo" />
 
+    <Spinner
+        android:id="@+id/spinner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toEndOf="@+id/Save"
+        app:layout_constraintStart_toStartOf="@+id/Save"
+        app:layout_constraintTop_toBottomOf="@+id/task"></Spinner>
+
     <Button
         android:id="@+id/Save"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="Submit Truck"
+        android:layout_marginTop="32dp"
+        android:text="Submit Task"
         android:textColorHighlight="#FFFFFF"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/task"
+        app:layout_constraintTop_toBottomOf="@+id/spinner"
         app:strokeColor="#FFFFFF" />
 
     <TextView

@@ -14,6 +14,9 @@ public interface TruckDao {
     @Query("SELECT * FROM truck_table")
     LiveData<List<Truck>> getAllTrucks();
 
+    /*@Query("SELECT * FROM truck_table")
+    List<Truck> getDropTrucks();*/
+
     @Insert
     void insertTruck(Truck truck);
 

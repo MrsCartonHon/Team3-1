@@ -10,16 +10,22 @@ import java.util.List;
 public class TruckRepository {
     private TruckDao truckDao;
     private LiveData<List<Truck>> mAllTrucks;
+    private List<Truck> mDropTrucks;
 
     TruckRepository(Application application) {
         TruckDatabase db = TruckDatabase.getDbInstance(application);
         truckDao = db.truckDao();
         mAllTrucks = truckDao.getAllTrucks();
+        //mDropTrucks = truckDao.getDropTrucks();
     }
 
     LiveData<List<Truck>> getAllTrucks() {
         return mAllTrucks;
     }
+
+    /*List<Truck> getDropTrucks() {
+        return getDropTrucks();
+    }*/
 
     public void insert (Truck truck) {
         new insertAsyncTask(truckDao).execute(truck);

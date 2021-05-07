@@ -11,14 +11,21 @@ public class TruckViewModel extends AndroidViewModel {
 
     private TruckRepository mRepository;
     private LiveData<List<Truck>> mAllTrucks;
+    private List<Truck> mDropTrucks;
 
     public TruckViewModel (Application application) {
         super(application);
         mRepository = new TruckRepository(application);
         mAllTrucks = mRepository.getAllTrucks();
+
     }
 
     public LiveData<List<Truck>> getAllTrucks() { return mAllTrucks; }
+
+    /*public List<Truck> getDropTrucks() {
+        mDropTrucks = mRepository.getDropTrucks();
+        return mDropTrucks;
+    }*/
 
     public void insert(Truck truck) {
         mRepository.insert(truck);
