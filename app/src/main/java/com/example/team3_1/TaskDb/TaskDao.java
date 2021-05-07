@@ -6,6 +6,8 @@ import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.Query;
 
+import com.example.team3_1.TruckDb.Truck;
+
 import java.util.List;
 
 @Dao
@@ -20,5 +22,7 @@ public interface TaskDao {
     @Delete
     void delete(Task task);
 
+    /*@Query("SELECT * FROM truck_table INNER JOIN TASK_TABLE ON id = TruckID")
+    LiveData<List<Truck>> getTruckTask();*/
 
 }

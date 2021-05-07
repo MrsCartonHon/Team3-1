@@ -1,5 +1,6 @@
 package com.example.team3_1.TaskDb;
 
+import androidx.annotation.Nullable;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
@@ -14,10 +15,14 @@ public class Task {
     @ColumnInfo(name = "name")
     private String name;
 
+    @Nullable
+    @ColumnInfo(name = "TruckID")
+    private int truckId;
 
-    public Task(String name ) {
+
+    public Task(String name, int truckId) {
         this.name = name;
-
+        this.truckId = truckId;
     }
 
     public int getId() {
@@ -28,9 +33,13 @@ public class Task {
         return name;
     }
 
+    public int getTruckId() {return truckId;}
+
     public void setName(String name) {
         this.name = name;
     }
+
+    public void setTruckId(int truckId) { this.truckId = truckId; }
 
     public void setId(int id){
         this.id = id;

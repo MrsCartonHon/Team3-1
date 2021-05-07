@@ -103,7 +103,7 @@ public class TasksFragment extends Fragment implements TaskAdapter.OnTaskDelete 
         super.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == NEW_TASK_ACTIVITY_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
-            Task task = new Task(data.getStringExtra("task_task"));
+            Task task = new Task(data.getStringExtra("task_task"), -1);
             mTaskViewModel.insert(task);
         } else {
             Toast.makeText(getContext(), R.string.new_truck_error_message, Toast.LENGTH_LONG).show();

@@ -2,14 +2,17 @@ package com.example.team3_1.ui;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.MenuPopupWindow;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -38,39 +41,10 @@ public class addTaskActivity extends AppCompatActivity implements AdapterView.On
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_task);
 
-        spinner = (Spinner) findViewById(R.id.spinner);
+
         EditText task = (EditText) findViewById(R.id.task);
-        Button Save =  findViewById(R.id.Save);
-        recyclerView = findViewById(R.id.recyclerView);
-
-        spinner.setOnItemSelectedListener(this);
-
-        loadSpinnerData();
-
-        Save.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent replyIntent = new Intent();
-                //check if Text is entered into all data fields. and send error if not filled in.
-                if( TextUtils.isEmpty(task.getText())){
-                    setResult(RESULT_CANCELED, replyIntent);
-                } else {
-
-                    String taskName = task.getText().toString();
-
-
-                    replyIntent.putExtra("task_task", taskName);
-
-
-
-                    setResult(RESULT_OK, replyIntent);
-                }
-                finish();
-            }
-        });
-    }
-
-    private void loadSpinnerData() {
+        Button Save = findViewById(R.id.Save);
+        spinner = (Spinner) findViewById(R.id.spinner);
         trucksNameList = new ArrayList<>();
         mTruckViewModel = ViewModelProviders.of(this).get(TruckViewModel.class);
         mTruckViewModel.getAllTrucks().observe(this, new Observer<List<Truck>>() {
@@ -83,20 +57,41 @@ public class addTaskActivity extends AppCompatActivity implements AdapterView.On
         });
 
 
-        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, trucksNameList);
+        ArrayAdapter<String> dataAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, trucksNameList);
 
+        dataAdapter.notifyDataSetChanged();
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
         spinner.setAdapter(dataAdapter);
+        spinner.setOnItemSelectedListener(this);
+
+
+        Save.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent replyIntent = new Intent();
+                //check if Text is entered into all data fields. and send error if not filled in.
+                if( TextUtils.isEmpty(task.getText())){
+                    setResult(RESULT_CANCELED, replyIntent);
+                } else {
+
+                    String taskName = task.getText().toString();
+                    Log.d("Spinner", String.valueOf(spinner.getSelectedItem()).toString());
+
+                    replyIntent.putExtra("task_task", taskName);
+
+
+
+                    setResult(RESULT_OK, replyIntent);
+                }
+                finish();
+            }
+        });
     }
+
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-
-        String label = parent.getItemAtPosition(position).toString();
-
-        Toast.makeText(parent.getContext(), "You selected: " + label + "at position: " + position, Toast.LENGTH_LONG).show();
-
+        Log.v("HI", "HI");
     }
 
     @Override
