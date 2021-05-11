@@ -2,9 +2,11 @@ package com.example.team3_1;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -15,7 +17,10 @@ import androidx.fragment.app.FragmentManager;
 import com.example.team3_1.ui.MapFragment;
 import com.example.team3_1.ui.TasksFragment;
 import com.example.team3_1.ui.TruckFragment;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 public class MangerHomeActivity extends AppCompatActivity {
     private TruckFragment truckFragment;
@@ -79,7 +84,18 @@ public class MangerHomeActivity extends AppCompatActivity {
              });
 
 
-
+        FirebaseMessaging.getInstance().subscribeToTopic("trucks")
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        String msg = ("Subscribed!");
+                        if (!task.isSuccessful()){
+                            msg = ("Failed to subscribe");
+                        }
+                        Log.d("trucks",msg);
+                        Toast.makeText(MangerHomeActivity.this, msg, Toast.LENGTH_SHORT).show();
+                    }
+                });
 
     }
 
