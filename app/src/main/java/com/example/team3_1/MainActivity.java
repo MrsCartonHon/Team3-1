@@ -47,6 +47,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onSuccess(@NonNull UserInfo result) {
                 boolean isManager = (boolean) result.get("isTruckManager");
+                Log.d("Login", result.toString());
                 navigateToHome(isManager);
             }
 

@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "929116537587",
+    "project_id": "trucks-23e26",
+    "storage_bucket": "trucks-23e26.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:929116537587:android:98567ae928e43c70fded86",
+        "android_client_info": {
+          "package_name": "com.example.team3_1"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "929116537587-kn8m3sh9q05hmie0tdoeisq77r15qfgd.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA1RRqmHET6liXJGKrWeBYAjHfO9LP-HBI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "929116537587-kn8m3sh9q05hmie0tdoeisq77r15qfgd.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
