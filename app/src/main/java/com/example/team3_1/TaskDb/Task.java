@@ -1,18 +1,24 @@
 package com.example.team3_1.TaskDb;
 
 import androidx.room.ColumnInfo;
+import androidx.room.Embedded;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
+
+import com.example.team3_1.TruckDb.Truck;
 
 @Entity(tableName = "task_table")
 public class Task {
 
     @PrimaryKey(autoGenerate = true)
-    @ColumnInfo(name = "id")
+    @ColumnInfo(name = "Taskid")
     private int id;
 
-    @ColumnInfo(name = "name")
+    @ColumnInfo(name = "Taskname")
     private String name;
+
+    @Embedded
+    private Truck truck;
 
 
     public Task(String name ) {
@@ -34,6 +40,12 @@ public class Task {
 
     public void setId(int id){
         this.id = id;
+    }
+
+    public Truck getTruck(){return this.truck;}
+
+    public void setTruck(Truck truck){
+        this.truck = truck;
     }
 
 }

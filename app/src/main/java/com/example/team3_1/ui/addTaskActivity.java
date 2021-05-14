@@ -30,6 +30,7 @@ import java.util.List;
 
 public class addTaskActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
     TruckViewModel mTruckViewModel;
+    private List<Truck> truckList;
     RecyclerView recyclerView;
     TruckListAdapter mAdapter;
     @Override
@@ -50,6 +51,7 @@ public class addTaskActivity extends AppCompatActivity implements AdapterView.On
         mTruckViewModel.getAllTrucks().observe(this, new Observer<List<Truck>>() {
             @Override
             public void onChanged(@Nullable final List<Truck> trucks) {
+                truckList = trucks;
                 for(Truck truck : trucks) {
                     trucksNameList.add(truck.getName());
                 }
@@ -76,6 +78,10 @@ public class addTaskActivity extends AppCompatActivity implements AdapterView.On
                 } else {
                     String taskName = task.getText().toString();
 
+                    Truck selectedTruck = truckList.get(trucksNameList.indexOf(spinner.getSelectedItem().toString()));
+                    selectedTruck.setTask(taskName);
+                    mTruckViewModel.updateTruck(selectedTruck);
+
                     replyIntent.putExtra("task_task", taskName);
 
                     setResult(RESULT_OK, replyIntent);
@@ -87,7 +93,7 @@ public class addTaskActivity extends AppCompatActivity implements AdapterView.On
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-        Log.d("AddTask", "seclected item");
+
     }
 
     @Override

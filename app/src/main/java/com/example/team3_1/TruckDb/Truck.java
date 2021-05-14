@@ -7,7 +7,7 @@ import androidx.room.PrimaryKey;
 @Entity(tableName = "truck_table")
 public class Truck {
     @PrimaryKey(autoGenerate = true)
-    @ColumnInfo(name = "id")
+    @ColumnInfo(name = "Truckid")
     private int id;
 
     @ColumnInfo(name = "name")

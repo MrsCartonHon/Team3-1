@@ -25,4 +25,8 @@ public class TruckViewModel extends AndroidViewModel {
     }
 
     public void deleteTruck(Truck truck){mRepository.deleteTruck(truck);}
+
+    public void updateTruck(Truck truck){
+        mRepository.updateTruck(truck);
+    }
 }

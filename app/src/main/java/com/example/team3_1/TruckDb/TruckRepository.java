@@ -29,6 +29,10 @@ public class TruckRepository {
         new deleteAsyncTask(truckDao).execute(truck);
     }
 
+    public void updateTruck(Truck truck){
+        new updateAsyncTask(truckDao).execute(truck);
+    }
+
     private static class insertAsyncTask extends AsyncTask<Truck, Void, Void> {
         private TruckDao mAsyncTaskDao;
 
@@ -56,4 +60,19 @@ public class TruckRepository {
             return null;
         }
     }
+
+    private static class updateAsyncTask extends AsyncTask<Truck, Void, Void> {
+        private TruckDao mAsyncTaskDao;
+
+        updateAsyncTask(TruckDao dao) {
+            mAsyncTaskDao = dao;
+        }
+
+        @Override
+        protected Void doInBackground(final Truck... params) {
+            mAsyncTaskDao.updateTruck(params[0]);
+            return null;
+        }
+    }
+
 }
