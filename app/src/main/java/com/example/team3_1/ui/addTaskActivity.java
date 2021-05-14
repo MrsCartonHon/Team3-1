@@ -29,10 +29,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class addTaskActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
-    TruckViewModel mTruckViewModel;
+    private TruckViewModel mTruckViewModel;
     private List<Truck> truckList;
-    RecyclerView recyclerView;
-    TruckListAdapter mAdapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,14 +55,10 @@ public class addTaskActivity extends AppCompatActivity implements AdapterView.On
                     trucksNameList.add(truck.getName());
                 }
                 ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(context, android.R.layout.simple_spinner_item, trucksNameList);
-
-                //dataAdapter.notifyDataSetChanged();
                 dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 spinner.setAdapter(dataAdapter);
-                //spinner.setOnItemSelectedListener(this);
                 spinner.setOnItemSelectedListener((AdapterView.OnItemSelectedListener) context);
             }
-
         });
 
 
@@ -78,11 +73,13 @@ public class addTaskActivity extends AppCompatActivity implements AdapterView.On
                 } else {
                     String taskName = task.getText().toString();
 
+                    //get Spinner info and update db
                     Truck selectedTruck = truckList.get(trucksNameList.indexOf(spinner.getSelectedItem().toString()));
                     selectedTruck.setTask(taskName);
                     mTruckViewModel.updateTruck(selectedTruck);
 
                     replyIntent.putExtra("task_task", taskName);
+                    //replyIntent.putExtra("truck_name", selectedTruck.getName());
 
                     setResult(RESULT_OK, replyIntent);
                 }
