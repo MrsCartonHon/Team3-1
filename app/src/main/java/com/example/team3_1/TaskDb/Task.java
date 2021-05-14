@@ -56,7 +56,7 @@ public class Task {
         this.truckNameTask = truckNameTask;
     }
 
-    public String getTruckId() {
+    public String getTruckNameTask() {
         return this.truckNameTask;
     }
 }

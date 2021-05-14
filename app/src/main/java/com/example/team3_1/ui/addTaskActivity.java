@@ -78,8 +78,9 @@ public class addTaskActivity extends AppCompatActivity implements AdapterView.On
                     selectedTruck.setTask(taskName);
                     mTruckViewModel.updateTruck(selectedTruck);
 
+                    String truckName = selectedTruck.getName();
                     replyIntent.putExtra("task_task", taskName);
-                    //replyIntent.putExtra("truck_name", selectedTruck.getName());
+                    replyIntent.putExtra("truck_name", truckName);
 
                     setResult(RESULT_OK, replyIntent);
                 }

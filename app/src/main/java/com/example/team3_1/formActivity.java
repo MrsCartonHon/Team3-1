@@ -26,7 +26,7 @@ import java.util.List;
 import java.util.Random;
 
 
-public class formActivity extends AppCompatActivity {
+public class formActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
     private TaskViewModel mTaskViewModel;
     private List<Task> taskList;
 
@@ -73,7 +73,7 @@ public class formActivity extends AppCompatActivity {
 
                     //get Spinner info and update db
                     Task selectedTask = taskList.get(taskNameList.indexOf(spinner.getSelectedItem().toString()));
-                    selectedTask.setTruck(truckName);
+                    selectedTask.setTruckId(truckName);
                     mTaskViewModel.updateTask(selectedTask);
 
 
@@ -87,5 +87,15 @@ public class formActivity extends AppCompatActivity {
                 finish();
             }
         });
+    }
+
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
+
     }
 }
