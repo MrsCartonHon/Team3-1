@@ -11,23 +11,23 @@ import com.example.team3_1.TruckDb.Truck;
 public class Task {
 
     @PrimaryKey(autoGenerate = true)
-    @ColumnInfo(name = "Taskid")
+    @ColumnInfo(name = "TaskId")
     private int id;
 
-    @ColumnInfo(name = "Taskname")
+    @ColumnInfo(name = "TaskName")
     private String name;
 
-    @ColumnInfo(name = "TruckTaskId")
-    private long truckId;
+    @ColumnInfo(name = "TruckNameTask")
+    private String truckNameTask;
 
 
     @Embedded
     private Truck truck;
 
 
-    public Task(String name, long truckId ) {
+    public Task(String name, String truckNameTask ) {
         this.name = name;
-        this.truckId = truckId;
+        this.truckNameTask = truckNameTask;
     }
 
     public int getId() {
@@ -52,11 +52,11 @@ public class Task {
         this.truck = truck;
     }
 
-    public void setTruckId(long truckId) {
-        this.truckId = truckId;
+    public void setTruckId(String truckNameTask) {
+        this.truckNameTask = truckNameTask;
     }
 
-    public long getTruckId() {
-        return this.truckId;
+    public String getTruckId() {
+        return this.truckNameTask;
     }
 }
