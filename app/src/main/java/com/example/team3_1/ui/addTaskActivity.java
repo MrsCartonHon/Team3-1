@@ -21,6 +21,8 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.example.team3_1.R;
+import com.example.team3_1.TaskDb.Task;
+import com.example.team3_1.TaskDb.TaskViewModel;
 import com.example.team3_1.TruckDb.Truck;
 import com.example.team3_1.TruckDb.TruckViewModel;
 import com.example.team3_1.TruckListAdapter;
@@ -30,9 +32,11 @@ import java.util.List;
 
 public class addTaskActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
     TruckViewModel mTruckViewModel;
+    TaskViewModel mTaskViewModel;
     private List<Truck> truckList;
     RecyclerView recyclerView;
     TruckListAdapter mAdapter;
+    private List<Task> taskList;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,7 +47,7 @@ public class addTaskActivity extends AppCompatActivity implements AdapterView.On
         EditText task = (EditText) findViewById(R.id.task);
         Button Save =  findViewById(R.id.Save);
 
-
+        mTaskViewModel = new TaskViewModel(getApplication());
         Spinner spinner = (Spinner) findViewById(R.id.spinner);
         List<String> trucksNameList = new ArrayList<String>();
         mTruckViewModel = ViewModelProviders.of(this).get(TruckViewModel.class);
@@ -79,7 +83,12 @@ public class addTaskActivity extends AppCompatActivity implements AdapterView.On
                     String taskName = task.getText().toString();
 
                     Truck selectedTruck = truckList.get(trucksNameList.indexOf(spinner.getSelectedItem().toString()));
+
+
                     selectedTruck.setTask(taskName);
+                    long truckId = selectedTruck.getId();
+                    Task task = new Task(taskName, truckId);
+                    mTaskViewModel.updateTask(task);
                     mTruckViewModel.updateTruck(selectedTruck);
 
                     replyIntent.putExtra("task_task", taskName);

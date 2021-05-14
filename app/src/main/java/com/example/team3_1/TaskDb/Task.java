@@ -17,13 +17,17 @@ public class Task {
     @ColumnInfo(name = "Taskname")
     private String name;
 
+    @ColumnInfo(name = "TruckTaskId")
+    private long truckId;
+
+
     @Embedded
     private Truck truck;
 
 
-    public Task(String name ) {
+    public Task(String name, long truckId ) {
         this.name = name;
-
+        this.truckId = truckId;
     }
 
     public int getId() {
@@ -48,4 +52,11 @@ public class Task {
         this.truck = truck;
     }
 
+    public void setTruckId(long truckId) {
+        this.truckId = truckId;
+    }
+
+    public long getTruckId() {
+        return this.truckId;
+    }
 }
