@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -41,6 +42,7 @@ public class formActivity extends AppCompatActivity implements AdapterView.OnIte
 
         Spinner spinner = (Spinner) findViewById(R.id.spinner2);
         List<String> taskNameList = new ArrayList<String>();
+        taskNameList.add("Select Task");
         mTaskViewModel = ViewModelProviders.of(this).get(TaskViewModel.class);
         Activity context = this;
         mTaskViewModel.getAllTask().observe(this, new Observer<List<Task>>() {
@@ -72,13 +74,19 @@ public class formActivity extends AppCompatActivity implements AdapterView.OnIte
                     double longitude = (Math.random() * ((-90 + 91) + 1)) - 91;
 
                     //get Spinner info and update db
-                    Task selectedTask = taskList.get(taskNameList.indexOf(spinner.getSelectedItem().toString()));
-                    selectedTask.setTruckId(truckName);
-                    mTaskViewModel.updateTask(selectedTask);
+                    String taskName;
+                    if(taskNameList.indexOf(spinner.getSelectedItem().toString()) < 1){//0 = no truck selected
+                        taskName = null;
+                    } else{
+                        Task selectedTask = taskList.get(taskNameList.indexOf(spinner.getSelectedItem().toString()) - 1);
+                        selectedTask.setTruckId(truckName);
+                        mTaskViewModel.updateTask(selectedTask);
 
+                        taskName = selectedTask.getName();
+                    }
 
                     replyIntent.putExtra("truck_name", truckName);
-                    replyIntent.putExtra("truck_task", selectedTask.getName());
+                    replyIntent.putExtra("truck_task", taskName);
                     replyIntent.putExtra("truck_contact", contactNumber);
                     replyIntent.putExtra("truck_latitude", String.valueOf(latitude));
                     replyIntent.putExtra("truck_longitude", String.valueOf(longitude));

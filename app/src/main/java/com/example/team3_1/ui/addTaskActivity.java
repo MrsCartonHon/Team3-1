@@ -45,6 +45,7 @@ public class addTaskActivity extends AppCompatActivity implements AdapterView.On
 
         Spinner spinner = (Spinner) findViewById(R.id.spinner);
         List<String> trucksNameList = new ArrayList<String>();
+        trucksNameList.add("Select Truck");
         mTruckViewModel = ViewModelProviders.of(this).get(TruckViewModel.class);
         Activity context = this;
         mTruckViewModel.getAllTrucks().observe(this, new Observer<List<Truck>>() {
@@ -74,11 +75,16 @@ public class addTaskActivity extends AppCompatActivity implements AdapterView.On
                     String taskName = task.getText().toString();
 
                     //get Spinner info and update db
-                    Truck selectedTruck = truckList.get(trucksNameList.indexOf(spinner.getSelectedItem().toString()));
-                    selectedTruck.setTask(taskName);
-                    mTruckViewModel.updateTruck(selectedTruck);
+                    String truckName;
+                    if(trucksNameList.indexOf(spinner.getSelectedItem().toString()) < 1){//0 = no truck selected
+                        truckName = null;
+                    } else{
+                        Truck selectedTruck = truckList.get(trucksNameList.indexOf(spinner.getSelectedItem().toString()) - 1);
+                        selectedTruck.setTask(taskName);
+                        mTruckViewModel.updateTruck(selectedTruck);
 
-                    String truckName = selectedTruck.getName();
+                        truckName = selectedTruck.getName();
+                    }
                     replyIntent.putExtra("task_task", taskName);
                     replyIntent.putExtra("truck_name", truckName);
 
