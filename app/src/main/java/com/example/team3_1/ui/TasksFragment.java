@@ -23,6 +23,7 @@ import java.util.List;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -55,6 +56,9 @@ public class TasksFragment extends Fragment implements TaskAdapter.OnTaskDelete 
     private FloatingActionButton buttonInsert;
     private TaskViewModel mTaskViewModel;
     private List<Task> mTaskList;
+    private TruckViewModel mTruckViewModel;
+    private List<Truck> truckList;
+    private List<String> trucksNameList = new ArrayList<String>();
 
     public TasksFragment() {
         super(R.layout.tasks_fragment);
@@ -68,6 +72,7 @@ public class TasksFragment extends Fragment implements TaskAdapter.OnTaskDelete 
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.tasks_fragment, container, false);
         buildRecyclerView(view);
+
         buttonInsert = view.findViewById(R.id.fab);
         buttonInsert.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -80,7 +85,7 @@ public class TasksFragment extends Fragment implements TaskAdapter.OnTaskDelete 
 
         // Get a new or existing ViewModel from the ViewModelProvider.
         mTaskViewModel = ViewModelProviders.of(this).get(TaskViewModel.class);
-
+        mTruckViewModel = ViewModelProviders.of(this).get(TruckViewModel.class);
         // Add an observer on the LiveData returned by getAlphabetizedWords.
         // The onChanged() method fires when the observed data changes and the activity is
         // in the foreground.
@@ -89,6 +94,16 @@ public class TasksFragment extends Fragment implements TaskAdapter.OnTaskDelete 
             public void onChanged(@Nullable final List<Task> tasks) {
                 // Update the cached copy of the words in the adapter.
                 mAdapter.setTasks(tasks);
+            }
+        });
+
+        mTruckViewModel.getAllTrucks().observe(getViewLifecycleOwner(), new Observer<List<Truck>>() {
+            @Override
+            public void onChanged(List<Truck> trucks) {
+                truckList = trucks;
+                for(Truck truck : trucks) {
+                    trucksNameList.add(truck.getName());
+                }
             }
         });
 
@@ -149,6 +164,14 @@ public class TasksFragment extends Fragment implements TaskAdapter.OnTaskDelete 
     @Override
     public void deleteTask(Task task) {
         mTaskViewModel.deleteTask(task);
+        updateTask(task);
+    }
+
+    public void updateTask(Task task) {
+        Truck selectedTruck = truckList.get(trucksNameList.indexOf(task.getTruckNameTask()));
+        selectedTruck.setTask(null);
+        mTruckViewModel.updateTruck(selectedTruck);
+
     }
 }
 

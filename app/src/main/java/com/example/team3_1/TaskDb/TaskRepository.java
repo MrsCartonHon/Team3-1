@@ -10,6 +10,7 @@ import java.util.List;
 public class TaskRepository {
     private TaskDao taskDao;
     private LiveData<List<Task>> mAllTask;
+    private int truckId;
 
     TaskRepository(Application application) {
         TaskDatabase db = TaskDatabase.getDbInstance(application);

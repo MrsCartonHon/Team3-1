@@ -24,4 +24,7 @@ public interface TaskDao {
     @Update
     void update(Task task);
 
+    @Query("SELECT Truckid FROM TASK_TABLE WHERE TaskName = :name")
+    int getTruckIdTask(String name);
+
 }

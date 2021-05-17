@@ -11,7 +11,7 @@ import androidx.sqlite.db.SupportSQLiteDatabase;
 
 import com.example.team3_1.TruckDb.TruckDao;
 
-@Database(entities = {Task.class}, version = 3,  exportSchema = false)
+@Database(entities = {Task.class}, version = 4,  exportSchema = false)
 public abstract class TaskDatabase extends RoomDatabase {
     public abstract TaskDao taskDao();
 

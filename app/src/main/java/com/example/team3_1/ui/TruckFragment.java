@@ -157,4 +157,8 @@ public class TruckFragment extends Fragment implements TruckListAdapter.OnTruckD
             Toast.makeText(getContext(), R.string.new_truck_error_message, Toast.LENGTH_LONG).show();
         }
     }
+
+    public void updateTruck(Truck truck) {
+        mTruckViewModel.updateTruck(truck);
+    }
 }
