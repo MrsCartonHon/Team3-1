@@ -64,7 +64,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ExampleViewHol
         Task currentItem = mTasks.get(position);
 
           holder.mTextView1.setText(currentItem.getName());
-          holder.mTextView2.setText(currentItem.getName()); //todo add descriptions to task or something
+          holder.mTextView2.setText(currentItem.getTruckNameTask());
         holder.mComplete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
