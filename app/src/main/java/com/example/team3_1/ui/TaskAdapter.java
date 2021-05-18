@@ -86,8 +86,6 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ExampleViewHol
         switch (item.getItemId()) {
             case R.id.complete_task:
                 mCallback.deleteTask(task);
-
-
                 return true;
             default:
                 return true;
