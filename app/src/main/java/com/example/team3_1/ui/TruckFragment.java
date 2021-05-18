@@ -3,6 +3,7 @@ package com.example.team3_1.ui;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -161,9 +162,26 @@ public class TruckFragment extends Fragment implements TruckListAdapter.OnTruckD
     }
 
     public void updateTaskDesc(Truck truck) {
-        Task selectedTask = taskList.get(taskNameList.indexOf(truck.getTask()));
-        selectedTask.setTruckNameTask(null);
-        mTaskViewModel.updateTask(selectedTask);
+        if(mTruckList == null) {
+            mTaskViewModel.getAllTask().observe(getViewLifecycleOwner(), new Observer<List<Task>>() {
+                @Override
+                public void onChanged(List<Task> tasks) {
+                    taskList = tasks;
+                    for(Task task : tasks) {
+                        taskNameList.add(task.getName());
+                    }
+                }
+            });
+        }
+        try {
+            Task selectedTask = taskList.get(taskNameList.indexOf(truck.getTask()));
+            selectedTask.setTruckNameTask(null);
+            mTaskViewModel.updateTask(selectedTask);
+        }
+        catch(Exception e) {
+            Log.d("Delete out of Order", "Index Out of Bounds");
+        }
+
     }
 
 
