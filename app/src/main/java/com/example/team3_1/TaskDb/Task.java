@@ -52,7 +52,7 @@ public class Task {
         this.truck = truck;
     }
 
-    public void setTruckId(String truckNameTask) {
+    public void setTruckNameTask(String truckNameTask) {
         this.truckNameTask = truckNameTask;
     }
 

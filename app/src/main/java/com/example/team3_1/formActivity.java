@@ -79,7 +79,7 @@ public class formActivity extends AppCompatActivity implements AdapterView.OnIte
                         taskName = null;
                     } else{
                         Task selectedTask = taskList.get(taskNameList.indexOf(spinner.getSelectedItem().toString()) - 1);
-                        selectedTask.setTruckId(truckName);
+                        selectedTask.setTruckNameTask(truckName);
                         mTaskViewModel.updateTask(selectedTask);
 
                         taskName = selectedTask.getName();

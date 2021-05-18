@@ -168,10 +168,14 @@ public class TasksFragment extends Fragment implements TaskAdapter.OnTaskDelete 
     }
 
     public void updateTask(Task task) {
-        Truck selectedTruck = truckList.get(trucksNameList.indexOf(task.getTruckNameTask()));
-        selectedTruck.setTask(null);
-        mTruckViewModel.updateTruck(selectedTruck);
-
+        try {
+            Truck selectedTruck = truckList.get(trucksNameList.indexOf(task.getTruckNameTask()));
+            selectedTruck.setTask(null);
+            mTruckViewModel.updateTruck(selectedTruck);
+        }
+        catch(Exception e) {
+            Log.d("Truck Deleted", "Truck was deleted first");
+        }
     }
 }
 
